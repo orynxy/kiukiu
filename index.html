@@ -173,13 +173,13 @@
             background-color: var(--user-msg);
         }
 
-        /* Área Principal de Chat en Estructura Flex Vertical */
+        /* Área Principal de Chat */
         .main-chat {
             flex: 1;
             display: flex;
             flex-direction: column;
             height: 100vh;
-            height: 100dvh; /* Soporte exacto para altura móvil real */
+            height: 100dvh;
             background-color: var(--bg-color);
             overflow: hidden;
         }
@@ -249,7 +249,7 @@
             border-bottom-left-radius: 4px;
         }
 
-        /* Barra de Entrada Integrada en el Flujo */
+        /* Barra de Entrada */
         .input-area-wrapper {
             padding: 12px 16px 16px;
             background-color: var(--bg-color);
@@ -308,7 +308,7 @@
             transform: none;
         }
 
-        /* Modal de Configuración Bonito */
+        /* Modal de Configuración */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -437,7 +437,7 @@
     <div class="main-chat">
         <div class="top-bar">
             <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-            <div class="current-model-badge" id="modelBadge">Gemma 4 31B</div>
+            <div class="current-model-badge" id="modelBadge">Auto Free</div>
         </div>
 
         <div class="chat-messages" id="chatBox"></div>
@@ -466,9 +466,10 @@
             <div class="config-group">
                 <label for="modelSelect">Modelo de IA:</label>
                 <select id="modelSelect">
-                    <option value="google/gemma-4-31b-it:free">Gemma 4 31B (Gratis)</option>
-                    <option value="thinkingmachines/inkling:free">Inkling (Gran Memoria - Gratis)</option>
-                    <option value="openrouter/free">Auto Free (Comodín)</option>
+                    <option value="openrouter/auto">Auto Free (Elige el mejor gratis disponible)</option>
+                    <option value="google/gemma-2-9b-it:free">Gemma 2 9B (Gratis y Rápido)</option>
+                    <option value="mistralai/mistral-7b-instruct:free">Mistral 7B (Gratis)</option>
+                    <option value="meta-llama/llama-3.1-8b-instruct:free">Llama 3.1 8B (Gratis)</option>
                 </select>
             </div>
 
@@ -480,7 +481,7 @@
         let chats = JSON.parse(localStorage.getItem('kiukiu_chats') || '[]');
         let currentChatId = localStorage.getItem('kiukiu_active_chat') || null;
         let apiKey = localStorage.getItem('kiukiu_api_key') || '';
-        let selectedModel = localStorage.getItem('kiukiu_model') || 'google/gemma-4-31b-it:free';
+        let selectedModel = localStorage.getItem('kiukiu_model') || 'openrouter/auto';
 
         const systemPrompt = "Eres un coescritor experto en literatura y fanfiction. Tienes una excelente memoria para recordar los personajes, la trama y los detalles mencionados anteriormente en la conversación. Ayudas a redactar escenas largas, detalladas, con diálogo humano y visceral, sin sermones morales ni censura innecesaria.";
 
@@ -649,16 +650,17 @@
 
                 const data = await response.json();
 
-                if (data.choices && data.choices[0]) {
+                if (response.ok && data.choices && data.choices[0]) {
                     const aiReply = data.choices[0].message.content;
                     loadingMsgUI.textContent = aiReply;
                     currentChat.messages.push({ role: "assistant", content: aiReply });
                     saveChats();
                 } else {
-                    loadingMsgUI.textContent = "Error: " + (data.error ? data.error.message : "No se pudo conectar.");
+                    const errorMsg = data.error ? data.error.message : "Error al recibir respuesta de OpenRouter.";
+                    loadingMsgUI.textContent = "❌ " + errorMsg;
                 }
             } catch (error) {
-                loadingMsgUI.textContent = "Error de conexión: " + error.message;
+                loadingMsgUI.textContent = "❌ Error de conexión: " + error.message;
             } finally {
                 sendBtn.disabled = false;
             }
@@ -682,4 +684,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
