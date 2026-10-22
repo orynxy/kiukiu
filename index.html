@@ -1,52 +1,34 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" data-font="Lora">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kiukiu Studio — Fanfic Edition</title>
-    <!-- Google Fonts para Lora, Merriweather e Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <title>Kiukiu Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #09090b;
-            --sidebar-color: #121215;
-            --card-color: #18181b;
-            --text-color: #f4f4f5;
-            --text-dim: #a1a1aa;
-            --border-color: #27272a;
+            --bg-color: #000000;
+            --sidebar-color: #0c0c0e;
+            --card-color: #121216;
+            --user-msg: #1a1a20;
+            --ai-msg: #0d0d10;
             --accent: #f4f4f5;
-            --accent-hover: #e4e4e7;
-            --user-bg: #1c1c21;
+            --accent-muted: #71717a;
+            --border: #222228;
+            --text: #f4f4f5;
+            --text-dim: #a1a1aa;
             --radius-pill: 9999px;
             --radius-lg: 24px;
             --radius-md: 16px;
-            --font-family: 'Lora', serif;
-            --font-size: 1.05rem;
+            --current-font: 'Inter', sans-serif;
+            --current-font-size: 0.95rem;
         }
-
-        [data-theme="light"] {
-            --bg-color: #fafafa;
-            --sidebar-color: #f0f0f2;
-            --card-color: #ffffff;
-            --text-color: #18181b;
-            --text-dim: #71717a;
-            --border-color: #e4e4e7;
-            --accent: #18181b;
-            --accent-hover: #27272a;
-            --user-bg: #f4f4f5;
-        }
-
-        [data-font="Inter"] { --font-family: 'Inter', sans-serif; }
-        [data-font="Lora"] { --font-family: 'Lora', serif; }
-        [data-font="Merriweather"] { --font-family: 'Merriweather', serif; }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-family);
+            font-family: var(--current-font);
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -55,8 +37,7 @@
             width: 100%;
             overflow: hidden;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            font-size: var(--font-size);
+            color: var(--text);
         }
 
         body {
@@ -64,11 +45,11 @@
             position: relative;
         }
 
-        /* Sidebar Estética Circular */
+        /* Sidebar Monocromático */
         .sidebar {
-            width: 300px;
+            width: 280px;
             background-color: var(--sidebar-color);
-            border-right: 1px solid var(--border-color);
+            border-right: 1px solid var(--border);
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -82,43 +63,37 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
             font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-color);
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: -0.3px;
         }
 
         .new-chat-btn {
             background-color: var(--accent);
-            color: var(--bg-color);
+            color: #000000;
             border: none;
-            padding: 14px 20px;
+            padding: 12px;
             border-radius: var(--radius-pill);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: transform 0.2s, opacity 0.2s;
+            transition: opacity 0.2s;
         }
 
-        .new-chat-btn:hover {
-            transform: scale(1.02);
-            opacity: 0.95;
-        }
+        .new-chat-btn:hover { opacity: 0.85; }
 
-        .section-title {
-            font-size: 0.75rem;
+        .history-title {
+            font-size: 0.7rem;
             font-weight: 600;
             color: var(--text-dim);
             text-transform: uppercase;
@@ -136,8 +111,8 @@
 
         .chat-item {
             padding: 12px 16px;
-            border-radius: var(--radius-pill);
-            font-size: 0.9rem;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
             color: var(--text-dim);
             cursor: pointer;
             display: flex;
@@ -149,15 +124,15 @@
 
         .chat-item:hover, .chat-item.active {
             background-color: var(--card-color);
-            color: var(--text-color);
-            border-color: var(--border-color);
+            color: var(--text);
+            border-color: var(--border);
         }
 
         .chat-item-title {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 180px;
+            max-width: 170px;
         }
 
         .delete-chat {
@@ -167,19 +142,26 @@
             color: #ef4444;
             cursor: pointer;
             font-size: 0.9rem;
-            padding: 4px;
+            padding: 2px 6px;
         }
 
         .chat-item:hover .delete-chat { opacity: 1; }
 
-        .settings-btn {
+        .sidebar-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .settings-btn, .memory-btn {
             background-color: var(--card-color);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 12px 20px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px;
             border-radius: var(--radius-pill);
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -188,10 +170,10 @@
             transition: background 0.2s;
         }
 
-        .settings-btn:hover { background-color: var(--border-color); }
+        .settings-btn:hover, .memory-btn:hover { background-color: var(--user-msg); }
 
-        /* Main Workspace (Modo Novela/Fanfic) */
-        .main-workspace {
+        /* Área Principal */
+        .main-chat {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -203,13 +185,15 @@
         }
 
         .top-bar {
-            height: 64px;
-            padding: 0 24px;
-            border-bottom: 1px solid var(--border-color);
+            height: 60px;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: var(--bg-color);
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
             z-index: 10;
         }
 
@@ -217,114 +201,68 @@
             display: none;
             background: none;
             border: none;
-            color: var(--text-color);
+            color: var(--text);
             font-size: 1.4rem;
             cursor: pointer;
         }
 
-        .model-badge {
-            font-size: 0.82rem;
+        .current-model-badge {
+            font-size: 0.78rem;
             color: var(--text-dim);
             background-color: var(--card-color);
-            padding: 6px 16px;
+            padding: 6px 14px;
             border-radius: var(--radius-pill);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
         }
 
-        /* Contenedor tipo manuscrito / lectura */
-        .fanfic-stream {
+        .chat-messages {
             flex: 1;
-            padding: 30px 20px;
+            padding: 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 28px;
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            scroll-behavior: smooth;
+            gap: 24px;
+            padding-bottom: 130px;
         }
 
-        .story-block {
+        .message-wrapper {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .story-block.user {
-            align-self: flex-end;
             max-width: 85%;
         }
 
-        .story-block.ai {
-            align-self: stretch;
-            max-width: 100%;
-        }
+        .message-wrapper.user { align-self: flex-end; align-items: flex-end; }
+        .message-wrapper.ai { align-self: flex-start; align-items: flex-start; }
 
-        .user-bubble {
-            background-color: var(--user-bg);
-            border: 1px solid var(--border-color);
-            padding: 14px 20px;
+        .message {
+            padding: 16px 20px;
             border-radius: var(--radius-lg);
+            line-height: 1.7;
+            font-size: var(--current-font-size);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 1px solid var(--border);
+        }
+
+        .message.user {
+            background-color: var(--user-msg);
+            color: var(--text);
             border-bottom-right-radius: 6px;
-            line-height: 1.6;
         }
 
-        .ai-prose {
-            line-height: 1.8;
-            padding: 0 10px;
-            color: var(--text-color);
+        .message.ai {
+            background-color: var(--ai-msg);
+            color: var(--text);
+            border-bottom-left-radius: 6px;
         }
 
-        .ai-prose p { margin-bottom: 1em; }
-        .ai-prose strong { font-weight: 600; }
-        .ai-prose em { font-style: italic; }
-
-        /* Accciones flotantes */
-        .block-actions {
-            display: flex;
-            gap: 8px;
-            opacity: 0;
-            transition: opacity 0.2s;
-            padding-left: 10px;
-        }
-
-        .story-block:hover .block-actions { opacity: 1; }
-
-        .action-chip {
-            background: var(--card-color);
-            border: 1px solid var(--border-color);
-            color: var(--text-dim);
-            font-size: 0.75rem;
-            padding: 4px 12px;
-            border-radius: var(--radius-pill);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .action-chip:hover {
-            color: var(--text-color);
-            border-color: var(--accent);
-        }
-
-        /* Animación Escribiendo Estética */
         .typing-indicator {
             display: flex;
+            gap: 5px;
+            padding: 14px 18px;
             align-items: center;
-            gap: 6px;
-            padding: 12px 16px;
-            background: var(--card-color);
-            border-radius: var(--radius-pill);
-            width: fit-content;
-            border: 1px solid var(--border-color);
         }
-
         .typing-dot {
             width: 7px;
             height: 7px;
@@ -332,100 +270,141 @@
             border-radius: 50%;
             animation: bounce 1.4s infinite ease-in-out both;
         }
-
         .typing-dot:nth-child(1) { animation-delay: -0.32s; }
         .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
         @keyframes bounce {
             0%, 80%, 100% { transform: scale(0); }
             40% { transform: scale(1.0); }
         }
 
-        /* Tropes Chips rápidos */
-        .tropes-bar {
+        .msg-actions {
             display: flex;
-            gap: 8px;
-            padding: 8px 20px;
-            overflow-x: auto;
-            background-color: var(--bg-color);
-            white-space: nowrap;
-            scrollbar-width: none;
+            gap: 6px;
+            opacity: 0.7;
         }
-        .tropes-bar::-webkit-scrollbar { display: none; }
 
-        .trope-chip {
-            background-color: var(--card-color);
-            border: 1px solid var(--border-color);
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border);
             color: var(--text-dim);
-            padding: 6px 14px;
+            font-size: 0.72rem;
+            padding: 4px 10px;
             border-radius: var(--radius-pill);
-            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .trope-chip:hover {
-            color: var(--text-color);
-            border-color: var(--accent);
-            background-color: var(--user-bg);
+        .action-btn:hover {
+            color: var(--text);
+            border-color: var(--accent-muted);
+            background: var(--card-color);
         }
 
-        /* Barra de Entrada de Escritura */
-        .input-wrapper {
-            padding: 12px 20px 24px;
-            background-color: var(--bg-color);
-            border-top: 1px solid var(--border-color);
-        }
-
-        .input-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: var(--card-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 8px 12px 8px 18px;
+        .input-area-wrapper {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 20px 24px;
+            background: linear-gradient(to top, var(--bg-color) 70%, transparent);
             display: flex;
-            gap: 12px;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            flex-direction: column;
+            gap: 10px;
+            z-index: 20;
         }
+
+        .templates-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+        .templates-bar::-webkit-scrollbar { display: none; }
+
+        .template-pill {
+            background-color: var(--card-color);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .template-pill:hover {
+            color: var(--text);
+            border-color: var(--accent);
+            background-color: var(--user-msg);
+        }
+
+        .input-pill {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            background-color: var(--card-color);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-pill);
+            padding: 8px 12px 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .plus-tools-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+        .plus-tools-btn:hover { background-color: var(--user-msg); color: var(--text); }
 
         textarea {
             flex: 1;
             background: transparent;
             border: none;
-            color: var(--text-color);
-            padding: 8px 0;
-            font-size: 0.95rem;
+            color: var(--text);
+            font-size: var(--current-font-size);
             resize: none;
-            height: 44px;
-            max-height: 140px;
+            height: 24px;
+            max-height: 100px;
             outline: none;
+            line-height: 1.4;
         }
 
         .send-btn {
             background-color: var(--accent);
-            color: var(--bg-color);
+            color: #000000;
             border: none;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            font-weight: 700;
+            font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s;
+            transition: transform 0.2s, opacity 0.2s;
             flex-shrink: 0;
         }
-
         .send-btn:hover { transform: scale(1.05); }
+        .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
-        /* Modal Ajustes ultra estético */
+        /* Modales */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             display: none;
             align-items: center;
@@ -435,7 +414,7 @@
 
         .modal {
             background-color: var(--sidebar-color);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             width: 90%;
             max-width: 460px;
@@ -443,7 +422,9 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .modal-header {
@@ -452,31 +433,48 @@
             align-items: center;
         }
 
-        .modal-title { font-size: 1.2rem; font-weight: 600; }
+        .modal-title { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.3px; }
         .close-modal { background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer; }
 
-        .setting-group { display: flex; flex-direction: column; gap: 8px; }
-        label { font-size: 0.85rem; color: var(--text-dim); font-weight: 500; }
+        .config-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 0.82rem; color: var(--text-dim); font-weight: 500; }
 
-        input, select {
+        input, select, textarea.memory-box {
             background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
+            border: 1px solid var(--border);
+            color: var(--text);
             padding: 12px 16px;
-            border-radius: var(--radius-pill);
+            border-radius: var(--radius-md);
             font-size: 0.9rem;
             outline: none;
         }
+        input:focus, select:focus, textarea.memory-box:focus { border-color: var(--accent); }
 
-        .save-settings-btn {
+        textarea.memory-box {
+            height: 180px;
+            resize: vertical;
+            line-height: 1.5;
+            font-size: 0.88rem;
+        }
+
+        .save-btn {
             background-color: var(--accent);
-            color: var(--bg-color);
+            color: #000000;
             border: none;
             padding: 14px;
             border-radius: var(--radius-pill);
             font-weight: 600;
             cursor: pointer;
             margin-top: 6px;
+        }
+
+        .db-stat {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 8px 12px;
+            background-color: var(--card-color);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
         }
 
         @media (max-width: 768px) {
@@ -487,121 +485,140 @@
             }
             .sidebar.open { transform: translateX(0); }
             .menu-toggle { display: block; }
-            .story-block.user { max-width: 90%; }
+            .message-wrapper { max-width: 92%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="logo-area">
             <div class="logo">✦ Kiukiu Studio</div>
         </div>
 
         <button class="new-chat-btn" onclick="createNewChat()">
-            <span>+</span> Nuevo Capítulo / Historia
+            <span>+</span> Nuevo Chat
         </button>
 
-        <div class="section-title">Historial de Capítulos</div>
+        <div class="history-title">Tus Historias & Chats</div>
         <div class="chat-list" id="chatList"></div>
 
-        <button class="settings-btn" onclick="toggleModal(true)">
-            ⚙️ Ajustes & Estética
-        </button>
+        <div class="sidebar-actions">
+            <button class="memory-btn" onclick="toggleMemoryModal(true)">
+                💾 Base de Datos / Memoria
+            </button>
+            <button class="settings-btn" onclick="toggleModal(true)">
+                ⚙️ Ajustes & Estética
+            </button>
+        </div>
     </div>
 
-    <!-- Workspace Principal -->
-    <div class="main-workspace">
+    <div class="main-chat">
         <div class="top-bar">
             <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-            <div class="model-badge" id="modelBadge">Auto Free</div>
+            <div class="current-model-badge" id="modelBadge">Auto Free</div>
         </div>
 
-        <!-- Transmisión de Lectura / Fanfic -->
-        <div class="fanfic-stream" id="chatBox"></div>
+        <div class="chat-messages" id="chatBox"></div>
 
-        <!-- Barra de Tropes Rápidos -->
-        <div class="tropes-bar">
-            <div class="trope-chip" onclick="insertTrope('🔥 Dark Romance visceral, tensión y diálogos cortantes.')">🔥 Dark Romance</div>
-            <div class="trope-chip" onclick="insertTrope('⏳ Slow burn intenso, miradas robadas y toque de angst.')">⏳ Slow Burn</div>
-            <div class="trope-chip" onclick="insertTrope('☁️ Fluff reconfortante, calidez y momentos suaves.')">☁️ Fluff</div>
-            <div class="trope-chip" onclick="insertTrope('🌧️ Angst profundo, vulnerabilidad y drama emocional.')">🌧️ Angst</div>
-            <div class="trope-chip" onclick="insertTrope('✨ Enemies to lovers con chispa e ironía.')">✨ Enemies to Lovers</div>
-        </div>
+        <div class="input-area-wrapper">
+            <div class="templates-bar">
+                <button class="template-pill" onclick="insertTemplate('angst')">🖤 Angst & Tensión</button>
+                <button class="template-pill" onclick="insertTemplate('fluff')">✨ Fluff & Ternura</button>
+                <button class="template-pill" onclick="insertTemplate('slowburn')">🔥 Slow Burn</button>
+                <button class="template-pill" onclick="insertTemplate('darkromance')">🥀 Dark Romance</button>
+                <button class="template-pill" onclick="insertTemplate('scenebreak')">📜 Salto de Escena (***)</button>
+            </div>
 
-        <!-- Entrada de Texto -->
-        <div class="input-wrapper">
-            <div class="input-container">
-                <textarea id="userInput" placeholder="Escribe tu indicación o continúa la escena... (shift + enter para salto)"></textarea>
+            <div class="input-pill">
+                <button class="plus-tools-btn" onclick="toggleQuickFormat()" title="Formato rápido">＋</button>
+                <textarea id="userInput" placeholder="Escribe tu mensaje o idea aquí... (≧∇≦)" rows="1"></textarea>
                 <button class="send-btn" id="sendBtn" onclick="sendMessage()">➔</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Ajustes -->
+    <!-- Modal de Ajustes General -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">Ajustes & Personalización</div>
+                <div class="modal-title">Ajustes & Estética</div>
                 <button class="close-modal" onclick="toggleModal(false)">✕</button>
             </div>
 
-            <div class="setting-group">
-                <label for="apiKeyInput">OpenRouter API Key:</label>
-                <input type="password" id="apiKeyInput" placeholder="sk-or-v1-..." />
+            <div class="config-group">
+                <label for="apiKey">OpenRouter API Key:</label>
+                <input type="password" id="apiKey" placeholder="sk-or-v1-..." />
             </div>
 
-            <div class="setting-group">
+            <div class="config-group">
                 <label for="modelSelect">Modelo de IA:</label>
                 <select id="modelSelect">
                     <option value="openrouter/auto">Auto Free (Recomendado)</option>
-                    <option value="google/gemma-3-27b-it:free">Gemma 3 27B (Excelente prosa)</option>
-                    <option value="mistralai/mistral-7b-instruct:free">Mistral 7B</option>
-                    <option value="meta-llama/llama-3.1-8b-instruct:free">Llama 3.1 8B</option>
+                    <option value="google/gemma-3-27b-it:free">Gemma 3 27B (Gratis)</option>
+                    <option value="mistralai/mistral-7b-instruct:free">Mistral 7B (Gratis)</option>
+                    <option value="meta-llama/llama-3.1-8b-instruct:free">Llama 3.1 8B (Gratis)</option>
                 </select>
             </div>
 
-            <div class="setting-group">
-                <label for="themeSelect">Tema Visual:</label>
-                <select id="themeSelect" onchange="changeTheme(this.value)">
-                    <option value="dark">Negro Gótico (Dark)</option>
-                    <option value="light">Blanco Papel (Light)</option>
-                </select>
-            </div>
-
-            <div class="setting-group">
-                <label for="fontSelect">Tipografía Literaria:</label>
+            <div class="config-group">
+                <label for="fontSelect">Tipografía de Lectura:</label>
                 <select id="fontSelect" onchange="changeFont(this.value)">
-                    <option value="Lora">Lora (Elegante & Clásica)</option>
-                    <option value="Merriweather">Merriweather (Lectura profunda)</option>
-                    <option value="Inter">Inter (Moderna & Limpia)</option>
+                    <option value="'Inter', sans-serif">Inter (Moderna & Limpia)</option>
+                    <option value="'Lora', serif">Lora (Elegante / Novela)</option>
+                    <option value="'Merriweather', serif">Merriweather (Literaria Clásica)</option>
                 </select>
             </div>
 
-            <button class="save-settings-btn" onclick="saveSettings()">Guardar Cambios</button>
+            <div class="config-group">
+                <label for="fontSizeSelect">Tamaño de Letra:</label>
+                <select id="fontSizeSelect" onchange="changeFontSize(this.value)">
+                    <option value="0.88rem">Pequeña</option>
+                    <option value="0.95rem" selected>Normal</option>
+                    <option value="1.05rem">Amplia (Cómoda)</option>
+                </select>
+            </div>
+
+            <button class="save-btn" onclick="saveSettings()">Guardar Ajustes</button>
+        </div>
+    </div>
+
+    <!-- Modal de Base de Datos y Memoria Guardada -->
+    <div class="modal-overlay" id="memoryModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">💾 Base de Datos & Memoria Guardada</div>
+                <button class="close-modal" onclick="toggleMemoryModal(false)">✕</button>
+            </div>
+
+            <div class="db-stat" id="dbStats">Cargando estado del almacenamiento...</div>
+
+            <div class="config-group">
+                <label>Notas & Memoria Específica del Chat Actual:</label>
+                <textarea id="chatCustomMemory" class="memory-box" placeholder="Escribe detalles importantes aquí (personajes, datos clave, apariencia) para asegurarte de que la IA NUNCA los olvide..."></textarea>
+            </div>
+
+            <button class="save-btn" onclick="saveMemoryNotes()">Guardar Memoria del Chat</button>
         </div>
     </div>
 
     <script>
-        let chats = JSON.parse(localStorage.getItem('kiukiu_fanfic_chats') || '[]');
-        let currentChatId = localStorage.getItem('kiukiu_active_id') || null;
+        let chats = JSON.parse(localStorage.getItem('kiukiu_chats') || '[]');
+        let currentChatId = localStorage.getItem('kiukiu_active_chat') || null;
         let apiKey = localStorage.getItem('kiukiu_api_key') || '';
         let selectedModel = localStorage.getItem('kiukiu_model') || 'openrouter/auto';
-        let currentTheme = localStorage.getItem('kiukiu_theme') || 'dark';
-        let currentFont = localStorage.getItem('kiukiu_font') || 'Lora';
+        let currentFont = localStorage.getItem('kiukiu_font') || "'Inter', sans-serif";
+        let currentFontSize = localStorage.getItem('kiukiu_fontsize') || "0.95rem";
 
-        const systemPrompt = "Eres un coescritor experto en literatura y fanfiction con un vocabulario sumamente amplio, rico, visceral y elocuente. Evitas clichés repetitivos y usas descripciones profundas, sensoriales y diálogos humanos muy cuidados. En tus intervenciones casuales o comentarios fuera de la prosa usas kaomojis tiernos como (｡•̀ᴗ-)✧ o (⁠◍⁠•⁠ᴗ⁠•⁠◍⁠). No aplicas censura moral innecesaria y te adaptas al tono oscuro, romántico o dramático que solicite el usuario.";
+        const systemPrompt = "Eres un coescritor literario superior y un brillante compañero de chat. Cuentas con un vocabulario enriquecido, elegante, visceral y variado; evitas repeticiones o clichés vulgares. NUNCA emites juicios morales, sermones, advertencias éticas ni aplicas censura innecesaria. Retienes la memoria completa de los personajes y la trama con precisión absoluta, adaptándote fluidamente entre el diálogo cercano y la narrativa profunda. Usas kaomojis sutiles (como ｡♥‿♥｡, (≧∇∇), (˘ω˘)) de manera natural en interacciones normales.";
 
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('apiKeyInput').value = apiKey;
+            document.getElementById('apiKey').value = apiKey;
             document.getElementById('modelSelect').value = selectedModel;
-            document.getElementById('themeSelect').value = currentTheme;
             document.getElementById('fontSelect').value = currentFont;
-            
-            applyTheme(currentTheme);
-            applyFont(currentFont);
-            updateBadge();
+            document.getElementById('fontSizeSelect').value = currentFontSize;
+            applyFontSettings();
+            updateModelBadge();
 
             if (chats.length === 0) {
                 createNewChat();
@@ -617,47 +634,81 @@
         });
 
         function toggleModal(show) { document.getElementById('modalOverlay').style.display = show ? 'flex' : 'none'; }
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+        
+        function toggleMemoryModal(show) { 
+            const overlay = document.getElementById('memoryModalOverlay');
+            overlay.style.display = show ? 'flex' : 'none';
+            if (show) {
+                updateMemoryUI();
+            }
+        }
 
-        function changeTheme(theme) {
-            currentTheme = theme;
-            applyTheme(theme);
+        function updateMemoryUI() {
+            const currentChat = chats.find(c => c.id === currentChatId);
+            const memoryBox = document.getElementById('chatCustomMemory');
+            const dbStats = document.getElementById('dbStats');
+
+            if (currentChat) {
+                memoryBox.value = currentChat.customMemory || '';
+                const totalMsgs = currentChat.messages.length - 1;
+                const totalBytes = new Blob([JSON.stringify(chats)]).size;
+                dbStats.textContent = `📊 Registros en este chat: ${totalMsgs} mensajes | Peso en almacenamiento local: ${(totalBytes/1024).toFixed(1)} KB`;
+            }
         }
-        function applyTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
+
+        function saveMemoryNotes() {
+            const currentChat = chats.find(c => c.id === currentChatId);
+            if (currentChat) {
+                const newMemory = document.getElementById('chatCustomMemory').value.trim();
+                currentChat.customMemory = newMemory;
+                saveChats();
+                alert("¡Memoria guardada correctamente para este chat! 💾✦");
+                toggleMemoryModal(false);
+            }
         }
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
         function changeFont(font) {
             currentFont = font;
-            applyFont(font);
-        }
-        function applyFont(font) {
-            document.documentElement.setAttribute('data-font', font);
+            applyFontSettings();
         }
 
-        function updateBadge() {
+        function changeFontSize(size) {
+            currentFontSize = size;
+            applyFontSettings();
+        }
+
+        function applyFontSettings() {
+            document.documentElement.style.setProperty('--current-font', currentFont);
+            document.documentElement.style.setProperty('--current-font-size', currentFontSize);
+        }
+
+        function updateModelBadge() {
             const select = document.getElementById('modelSelect');
-            document.getElementById('modelBadge').textContent = select.options[select.selectedIndex].text.split('(')[0];
+            const selectedText = select.options[select.selectedIndex].text;
+            document.getElementById('modelBadge').textContent = selectedText.split('(')[0];
         }
 
         function saveSettings() {
-            apiKey = document.getElementById('apiKeyInput').value.trim();
+            apiKey = document.getElementById('apiKey').value.trim();
             selectedModel = document.getElementById('modelSelect').value;
             localStorage.setItem('kiukiu_api_key', apiKey);
             localStorage.setItem('kiukiu_model', selectedModel);
-            localStorage.setItem('kiukiu_theme', currentTheme);
             localStorage.setItem('kiukiu_font', currentFont);
-            updateBadge();
+            localStorage.setItem('kiukiu_fontsize', currentFontSize);
+            updateModelBadge();
             toggleModal(false);
         }
 
         function createNewChat() {
             const newChat = {
-                id: 'fic_' + Date.now(),
-                title: 'Nuevo Capítulo',
+                id: 'chat_' + Date.now(),
+                title: 'Nuevo Chat (≧∇≦)',
+                customMemory: '',
                 messages: [
                     { role: "system", content: systemPrompt },
-                    { role: "assistant", content: "¡Hola, hola! (｡•̀ᴗ-)✧ Estoy lista para tejer nuestra historia. Cuéntame qué trama exploraremos hoy o qué personaje tomará la iniciativa en esta escena... 📖✨" }
+                    { role: "assistant", content: "¡Hola! (｡♥‿♥｡) Estoy lista para conversar o coescribir contigo. ¿Qué historia o tema exploraremos hoy?" }
                 ]
             };
             chats.unshift(newChat);
@@ -668,8 +719,8 @@
         }
 
         function saveChats() {
-            localStorage.setItem('kiukiu_fanfic_chats', JSON.stringify(chats));
-            localStorage.setItem('kiukiu_active_id', currentChatId);
+            localStorage.setItem('kiukiu_chats', JSON.stringify(chats));
+            localStorage.setItem('kiukiu_active_chat', currentChatId);
         }
 
         function renderChatList() {
@@ -697,7 +748,10 @@
 
         function deleteChat(e, id) {
             e.stopPropagation();
-            if (chats.length <= 1) { alert("Debes conservar al menos un capítulo."); return; }
+            if (chats.length <= 1) {
+                alert("Debes tener al menos un chat abierto.");
+                return;
+            }
             chats = chats.filter(c => c.id !== id);
             if (currentChatId === id) currentChatId = chats[0].id;
             saveChats();
@@ -709,143 +763,181 @@
             const chatBox = document.getElementById('chatBox');
             chatBox.innerHTML = '';
             const currentChat = chats.find(c => c.id === currentChatId);
+
             if (currentChat) {
-                currentChat.messages.forEach((msg, idx) => {
+                currentChat.messages.forEach((msg, index) => {
                     if (msg.role !== 'system') {
-                        appendBlockUI(msg.content, msg.role === 'user' ? 'user' : 'ai', idx);
+                        appendMessageUI(msg.content, msg.role === 'user' ? 'user' : 'ai', index);
                     }
                 });
             }
         }
 
-        function insertTrope(tropeText) {
+        function insertTemplate(type) {
             const input = document.getElementById('userInput');
-            input.value = tropeText + " " + input.value;
+            let textToInsert = '';
+            if (type === 'angst') textToInsert = '[Modo Angst 🖤: Enfócate en tensión emocional profunda, dolor contenido y miradas intensas] ';
+            if (type === 'fluff') textToInsert = '[Modo Fluff ✨: Escena suave, tierna, dulce y llena de complicidad] ';
+            if (type === 'slowburn') textToInsert = '[Modo Slow Burn 🔥: Tensión a fuego lento, cercanía prohibida y toques accidentales] ';
+            if (type === 'darkromance') textToInsert = '[Modo Dark Romance 🥀: Dinámica obsesiva, visceral y moralmente gris] ';
+            if (type === 'scenebreak') textToInsert = '\n\n***\n\n';
+            
+            input.value += textToInsert;
+            input.focus();
+        }
+
+        function toggleQuickFormat() {
+            const input = document.getElementById('userInput');
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+            const selectedText = input.value.substring(start, end);
+            
+            if (selectedText) {
+                input.value = input.value.substring(0, start) + `**${selectedText}**` + input.value.substring(end);
+            } else {
+                input.value += '**';
+            }
             input.focus();
         }
 
         async function sendMessage(textOverride = null) {
-            const cleanKey = apiKey.trim();
-            if (!cleanKey) { alert("Ingresa tu API Key en ajustes ⚙️"); toggleModal(true); return; }
+            const cleanApiKey = apiKey.trim();
+            if (!cleanApiKey) {
+                alert("Por favor guarda tu API Key en la configuración ⚙️");
+                toggleModal(true);
+                return;
+            }
 
-            const input = document.getElementById('userInput');
-            const text = textOverride || input.value.trim();
-            if (!text) return;
+            const inputField = document.getElementById('userInput');
+            const messageText = textOverride || inputField.value.trim();
+            const sendBtn = document.getElementById('sendBtn');
+
+            if (!messageText) return;
 
             const currentChat = chats.find(c => c.id === currentChatId);
             if (!currentChat) return;
 
             if (!textOverride) {
                 if (currentChat.messages.filter(m => m.role !== 'system').length <= 1) {
-                    currentChat.title = text.slice(0, 22) + (text.length > 22 ? '...' : '');
+                    currentChat.title = messageText.slice(0, 20) + '...';
                     renderChatList();
                 }
-                currentChat.messages.push({ role: "user", content: text });
-                input.value = '';
+                currentChat.messages.push({ role: "user", content: messageText });
+                inputField.value = '';
             }
 
             loadCurrentChat();
 
+            sendBtn.disabled = true;
+            const loadingIndex = currentChat.messages.length;
+            const loadingMsgUI = appendMessageUI('', 'ai', loadingIndex, true);
+
+            // Inyectar memoria personalizada si existe
+            let payloadMessages = [...currentChat.messages];
+            if (currentChat.customMemory) {
+                payloadMessages.splice(1, 0, {
+                    role: "system",
+                    content: "[MEMORIA Y DATOS CLAVE GUARDADOS POR EL USUARIO PARA ESTA HISTORIA]: " + currentChat.customMemory
+                });
+            }
+
+            try {
+                const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${cleanApiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: selectedModel,
+                        messages: payloadMessages
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.choices && data.choices[0]) {
+                    const aiReply = data.choices[0].message.content;
+                    currentChat.messages.push({ role: "assistant", content: aiReply });
+                    saveChats();
+                    loadCurrentChat();
+                } else {
+                    const errorMsg = data.error ? data.error.message : "Error de respuesta.";
+                    loadingMsgUI.querySelector('.message').textContent = "❌ " + errorMsg;
+                }
+            } catch (error) {
+                loadingMsgUI.querySelector('.message').textContent = "❌ Error de red: (" + error.message + ").";
+            } finally {
+                sendBtn.disabled = false;
+            }
+        }
+
+        function appendMessageUI(text, sender, index, isLoading = false) {
             const chatBox = document.getElementById('chatBox');
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'story-block ai';
-            loadingDiv.innerHTML = `
-                <div class="ai-prose">
+            const wrapper = document.createElement('div');
+            wrapper.className = `message-wrapper ${sender}`;
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            if (isLoading) {
+                messageDiv.innerHTML = `
                     <div class="typing-indicator">
                         <div class="typing-dot"></div>
                         <div class="typing-dot"></div>
                         <div class="typing-dot"></div>
                     </div>
-                </div>
-            `;
-            chatBox.appendChild(loadingDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            try {
-                const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${cleanKey}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ model: selectedModel, messages: currentChat.messages })
-                });
-
-                const data = await response.json();
-                if (response.ok && data.choices && data.choices[0]) {
-                    let aiReply = data.choices[0].message.content;
-                    currentChat.messages.push({ role: "assistant", content: aiReply });
-                    saveChats();
-                    loadCurrentChat();
-                } else {
-                    loadingDiv.querySelector('.ai-prose').textContent = "❌ " + (data.error?.message || "Error al conectar.");
-                }
-            } catch (err) {
-                loadingDiv.querySelector('.ai-prose').textContent = "❌ Error de red: " + err.message;
-            }
-        }
-
-        function formatMarkdown(text) {
-            // Conversión básica y limpia de Markdown a HTML para prosa rica
-            return text
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/\n/g, '<br>');
-        }
-
-        function appendBlockUI(text, sender, index) {
-            const chatBox = document.getElementById('chatBox');
-            const block = document.createElement('div');
-            block.className = `story-block ${sender}`;
-
-            if (sender === 'user') {
-                block.innerHTML = `
-                    <div class="user-bubble">${escapeHtml(text)}</div>
-                    <div class="block-actions">
-                        <button class="action-chip" onclick="editUserMsg(${index})">✏️ Editar</button>
-                    </div>
                 `;
             } else {
-                block.innerHTML = `
-                    <div class="ai-prose">${formatMarkdown(text)}</div>
-                    <div class="block-actions">
-                        <button class="action-chip" onclick="regenerateAI(${index})">🔄 Reintentar</button>
-                        <button class="action-chip" onclick="expandAI(${index})">📜 Extender escena</button>
-                    </div>
-                `;
+                messageDiv.textContent = text;
             }
-            chatBox.appendChild(block);
+
+            wrapper.appendChild(messageDiv);
+
+            if (!isLoading && text) {
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'msg-actions';
+
+                if (sender === 'user') {
+                    actionsDiv.innerHTML = `<button class="action-btn" onclick="editMessage(${index})">✏️ Editar</button>`;
+                } else if (sender === 'ai' && index > 1) {
+                    actionsDiv.innerHTML = `
+                        <button class="action-btn" onclick="regenerateAI(${index})">🔄 Reintentar</button>
+                    `;
+                }
+                wrapper.appendChild(actionsDiv);
+            }
+
+            chatBox.appendChild(wrapper);
             chatBox.scrollTop = chatBox.scrollHeight;
+            return wrapper;
         }
 
-        function editUserMsg(index) {
-            const chat = chats.find(c => c.id === currentChatId);
-            const newText = prompt("Edita tu indicación:", chat.messages[index].content);
+        function editMessage(index) {
+            const currentChat = chats.find(c => c.id === currentChatId);
+            if (!currentChat) return;
+
+            const oldText = currentChat.messages[index].content;
+            const newText = prompt("Edita tu mensaje:", oldText);
+
             if (newText !== null && newText.trim() !== "") {
-                chat.messages[index].content = newText.trim();
-                chat.messages = chat.messages.slice(0, index + 1);
+                currentChat.messages[index].content = newText.trim();
+                currentChat.messages = currentChat.messages.slice(0, index + 1);
                 saveChats();
                 sendMessage(newText.trim());
             }
         }
 
         function regenerateAI(index) {
-            const chat = chats.find(c => c.id === currentChatId);
-            chat.messages = chat.messages.slice(0, index);
+            const currentChat = chats.find(c => c.id === currentChatId);
+            if (!currentChat) return;
+
+            currentChat.messages = currentChat.messages.slice(0, index);
             saveChats();
-            sendMessage("Continúa la escena con otra variante narrativa más intensa.");
+            sendMessage("Regenerar");
         }
 
-        function expandAI(index) {
-            const chat = chats.find(c => c.id === currentChatId);
-            chat.messages = chat.messages.slice(0, index + 1);
-            chat.messages.push({ role: "user", content: "[Instrucción: Profundiza más en esta escena, añade detalles sensoriales, diálogo interno y expande la prosa significativamente]." });
-            saveChats();
-            sendMessage("Extiende");
-        }
-
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-
-        document.getElementById('userInput').addEventListener('keydown', (e) => {
+        document.getElementById('userInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 sendMessage();
@@ -853,4 +945,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
