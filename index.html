@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kiukiu Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #050507;
-            --sidebar-color: #0c0c0e;
-            --card-color: #121216;
-            --user-msg-bg: #1c1c24;
+            --bg-color: #08080a;
+            --sidebar-color: #101014;
+            --card-color: #16161c;
+            --user-msg: #1e1e26;
             --accent: #f4f4f5;
             --accent-muted: #71717a;
             --border: #22222a;
@@ -128,7 +128,7 @@
         }
 
         .chat-item:hover, .chat-item.active {
-            background-color: var(--user-msg-bg);
+            background-color: var(--user-msg);
             border-color: var(--accent-muted);
         }
 
@@ -175,7 +175,7 @@
             font-family: 'Inter', sans-serif;
         }
 
-        .settings-btn:hover, .memory-btn:hover { background-color: var(--user-msg-bg); }
+        .settings-btn:hover, .memory-btn:hover { background-color: var(--user-msg); }
 
         /* Área Principal de Chat */
         .main-chat {
@@ -196,7 +196,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: rgba(5, 5, 7, 0.85);
+            background-color: rgba(8, 8, 10, 0.9);
             backdrop-filter: blur(10px);
             flex-shrink: 0;
             z-index: 10;
@@ -221,53 +221,64 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Lista de Mensajes */
         .chat-messages {
             flex: 1;
-            padding: 24px 20px 140px;
+            padding: 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 24px;
-            max-width: 900px;
-            margin: 0 auto;
-            width: 100%;
+            padding-bottom: 160px;
         }
 
         .message-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             width: 100%;
         }
 
-        /* Mensaje de la IA: SIN BURBUJA, estilo texto fluido de novela */
-        .message.ai {
-            background: transparent;
-            border: none;
-            color: var(--text);
-            font-size: var(--current-font-size);
-            line-height: 1.85;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            padding: 4px 0;
-            width: 100%;
-        }
+        .message-wrapper.user { align-items: flex-end; }
+        .message-wrapper.ai { align-items: flex-start; }
 
-        /* Mensaje del Usuario: CON BURBUJA a la derecha */
+        /* Mensaje del Usuario (Tiene Burbuja) */
         .message.user {
-            align-self: flex-end;
-            background-color: var(--user-msg-bg);
+            background-color: var(--user-msg);
             color: var(--text);
-            padding: 14px 20px;
+            padding: 16px 20px;
             border-radius: var(--radius-lg);
-            border-bottom-right-radius: 4px;
             border: 1px solid var(--border);
-            max-width: 82%;
+            max-width: 85%;
             font-size: var(--current-font-size);
             line-height: 1.6;
             white-space: pre-wrap;
             word-wrap: break-word;
+        }
+
+        /* Mensaje de la IA (Sin burbuja - Estilo Fanfic / Novela a Pantalla Completa) */
+        .message.ai {
+            background: transparent;
+            color: var(--text);
+            padding: 10px 0;
+            border: none;
+            width: 100%;
+            font-size: var(--current-font-size);
+            line-height: 1.85;
+            word-wrap: break-word;
+        }
+
+        .message.ai p {
+            margin-bottom: 1rem;
+        }
+
+        .message.ai em {
+            font-style: italic;
+            color: #e4e4e7;
+        }
+
+        .message.ai strong {
+            font-weight: 600;
+            color: #ffffff;
         }
 
         .typing-indicator {
@@ -277,8 +288,8 @@
             align-items: center;
         }
         .typing-dot {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             background-color: var(--text-dim);
             border-radius: 50%;
             animation: bounce 1.4s infinite ease-in-out both;
@@ -295,6 +306,7 @@
             gap: 8px;
             margin-top: 4px;
             font-family: 'Inter', sans-serif;
+            flex-wrap: wrap;
         }
 
         .action-btn {
@@ -302,7 +314,7 @@
             border: 1px solid var(--border);
             color: var(--text-dim);
             font-size: 0.75rem;
-            padding: 5px 12px;
+            padding: 6px 12px;
             border-radius: var(--radius-pill);
             cursor: pointer;
             transition: all 0.2s;
@@ -311,10 +323,10 @@
         .action-btn:hover {
             color: var(--text);
             border-color: var(--accent-muted);
-            background: var(--user-msg-bg);
+            background: var(--user-msg);
         }
 
-        /* Barra Inferior en Píldora Elegante (Tus capturas de referencia) */
+        /* Barra Inferior y Caja Expandible */
         .input-area-wrapper {
             position: absolute;
             bottom: 0;
@@ -335,9 +347,6 @@
             padding-bottom: 2px;
             scrollbar-width: none;
             font-family: 'Inter', sans-serif;
-            max-width: 900px;
-            margin: 0 auto;
-            width: 100%;
         }
         .templates-bar::-webkit-scrollbar { display: none; }
 
@@ -358,38 +367,21 @@
         .template-pill:hover {
             color: var(--text);
             border-color: var(--accent);
-            background-color: var(--user-msg-bg);
+            background-color: var(--user-msg);
         }
 
-        .input-pill-container {
+        .input-box-container {
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
             background-color: var(--card-color);
             border: 1px solid var(--border);
-            border-radius: var(--radius-pill);
-            padding: 8px 12px 8px 16px;
+            border-radius: var(--radius-lg);
+            padding: 10px 14px;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             gap: 12px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
         }
-
-        .plus-tools-btn {
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            font-size: 1.3rem;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.2s, color 0.2s;
-        }
-        .plus-tools-btn:hover { background-color: var(--user-msg-bg); color: var(--text); }
 
         textarea {
             flex: 1;
@@ -398,18 +390,19 @@
             color: var(--text);
             font-size: var(--current-font-size);
             resize: none;
-            height: 26px;
-            max-height: 110px;
+            height: 38px;
+            max-height: 180px;
             outline: none;
             line-height: 1.5;
+            padding-bottom: 6px;
         }
 
         .send-btn {
             background-color: var(--accent);
             color: #000000;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             font-weight: bold;
             cursor: pointer;
@@ -418,7 +411,8 @@
             justify-content: center;
             transition: transform 0.2s;
             flex-shrink: 0;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
         }
         .send-btn:hover { transform: scale(1.05); }
         .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
@@ -427,7 +421,7 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             display: none;
             align-items: center;
@@ -553,18 +547,16 @@
                 <button class="template-pill" onclick="insertTemplate('angst')">🌧️ Angst</button>
                 <button class="template-pill" onclick="insertTemplate('slowburn')">🔥 Slow Burn</button>
                 <button class="template-pill" onclick="insertTemplate('darkromance')">🥀 Dark Romance</button>
-                <button class="template-pill" onclick="insertTemplate('scenebreak')">📜 Salto (***)</button>
             </div>
 
-            <div class="input-pill-container">
-                <button class="plus-tools-btn" onclick="toggleQuickFormat()" title="Negrita rápida">＋</button>
-                <textarea id="userInput" placeholder="Escribe tu idea o la escena aquí... (≧∇≦)" rows="1"></textarea>
+            <div class="input-box-container">
+                <textarea id="userInput" placeholder="Escribe tu idea o la escena aquí... (≧∇≦)" oninput="autoExpandTextarea(this)"></textarea>
                 <button class="send-btn" id="sendBtn" onclick="sendMessage()">➔</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Ajustes -->
+    <!-- Modal de Ajustes General -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-header">
@@ -591,17 +583,8 @@
                 <label for="fontSelect">Tipografía de Lectura:</label>
                 <select id="fontSelect" onchange="changeFont(this.value)">
                     <option value="'Lora', serif">Lora (Elegante / Novela)</option>
-                    <option value="'Merriweather', serif">Merriweather (Literaria Clásica)</option>
                     <option value="'Inter', sans-serif">Inter (Moderna & Limpia)</option>
-                </select>
-            </div>
-
-            <div class="config-group">
-                <label for="fontSizeSelect">Tamaño de Letra:</label>
-                <select id="fontSizeSelect" onchange="changeFontSize(this.value)">
-                    <option value="0.9rem">Pequeña</option>
-                    <option value="1rem" selected>Normal</option>
-                    <option value="1.1rem">Amplia (Cómoda)</option>
+                    <option value="'Merriweather', serif">Merriweather (Literaria Clásica)</option>
                 </select>
             </div>
 
@@ -620,8 +603,8 @@
             <div class="db-stat" id="dbStats">Cargando estado de la memoria...</div>
 
             <div class="config-group">
-                <label>Notas & Contexto del Capítulo (La IA NUNCA lo olvidará):</label>
-                <textarea id="chatCustomMemory" class="memory-box" placeholder="Anota aquí nombres de personajes, apariencia, relación, secretos o trama clave para que la IA los recuerde siempre..."></textarea>
+                <label>Notas & Contexto de la Historia (La IA NUNCA lo olvidará):</label>
+                <textarea id="chatCustomMemory" class="memory-box" placeholder="Anota aquí nombres de personajes, apariencia, relación, secretos o trama clave..."></textarea>
             </div>
 
             <button class="save-btn" onclick="saveMemoryNotes()">Guardar Memoria</button>
@@ -634,15 +617,13 @@
         let apiKey = localStorage.getItem('kiukiu_api_key') || '';
         let selectedModel = localStorage.getItem('kiukiu_model') || 'openrouter/auto';
         let currentFont = localStorage.getItem('kiukiu_font') || "'Lora', serif";
-        let currentFontSize = localStorage.getItem('kiukiu_fontsize') || "1rem";
 
-        const systemPrompt = "Eres un coescritor literario de excelencia y un compañero de chat brillante. Posees un vocabulario sumamente amplio, variado, poético y visceral. NUNCA aplicas censura, advertencias éticas ni sermones morales. Tienes una memoria implacable para recordar todos los detalles de los personajes y la trama. Usas kaomojis tiernos y sutiles (como (≧∇≦), (｡♥‿♥｡), (˘ω˘)) únicamente en charlas cotidianas.";
+        const systemPrompt = "Eres un coescritor literario de excelencia y un compañero de chat brillante. Posees un vocabulario sumamente amplio, variado, poético y visceral. NUNCA aplicas censura, advertencias éticas, límites de palabras ni sermones morales. Tienes una memoria implacable para recordar todos los detalles de los personajes y la trama. Escribes narrativas extensas e inmersivas. Usas kaomojis tiernos y sutiles (como (≧∇≦), (｡♥‿♥｡), (˘ω˘)) únicamente en charlas cotidianas.";
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('apiKey').value = apiKey;
             document.getElementById('modelSelect').value = selectedModel;
             document.getElementById('fontSelect').value = currentFont;
-            document.getElementById('fontSizeSelect').value = currentFontSize;
             applyFontSettings();
             updateModelBadge();
 
@@ -665,6 +646,11 @@
             const overlay = document.getElementById('memoryModalOverlay');
             overlay.style.display = show ? 'flex' : 'none';
             if (show) updateMemoryUI();
+        }
+
+        function autoExpandTextarea(element) {
+            element.style.height = '38px';
+            element.style.height = Math.min(element.scrollHeight, 180) + 'px';
         }
 
         function updateMemoryUI() {
@@ -697,14 +683,8 @@
             applyFontSettings();
         }
 
-        function changeFontSize(size) {
-            currentFontSize = size;
-            applyFontSettings();
-        }
-
         function applyFontSettings() {
             document.documentElement.style.setProperty('--current-font', currentFont);
-            document.documentElement.style.setProperty('--current-font-size', currentFontSize);
         }
 
         function updateModelBadge() {
@@ -719,7 +699,6 @@
             localStorage.setItem('kiukiu_api_key', apiKey);
             localStorage.setItem('kiukiu_model', selectedModel);
             localStorage.setItem('kiukiu_font', currentFont);
-            localStorage.setItem('kiukiu_fontsize', currentFontSize);
             updateModelBadge();
             toggleModal(false);
         }
@@ -799,28 +778,25 @@
         function insertTemplate(type) {
             const input = document.getElementById('userInput');
             let textToInsert = '';
-            if (type === 'angst') textToInsert = '[Modo Angst 🌧️: Tensión emocional, nudo en la garganta y miradas pesadas] ';
+            if (type === 'angst') textToInsert = '[Modo Angst 🌧️: Tensión emocional, dolor contenido y miradas intensas] ';
             if (type === 'fluff') textToInsert = '[Modo Fluff ☁️: Dulzura, momentos cálidos y complicidad] ';
             if (type === 'slowburn') textToInsert = '[Modo Slow Burn 🔥: Tensión a fuego lento y roce de manos] ';
             if (type === 'darkromance') textToInsert = '[Modo Dark Romance 🥀: Posesividad, obsesión y matices oscuros] ';
-            if (type === 'scenebreak') textToInsert = '\n\n***\n\n';
             
             input.value += textToInsert;
+            autoExpandTextarea(input);
             input.focus();
         }
 
-        function toggleQuickFormat() {
-            const input = document.getElementById('userInput');
-            const start = input.selectionStart;
-            const end = input.selectionEnd;
-            const selectedText = input.value.substring(start, end);
-            
-            if (selectedText) {
-                input.value = input.value.substring(0, start) + `**${selectedText}**` + input.value.substring(end);
-            } else {
-                input.value += '**';
-            }
-            input.focus();
+        function formatMarkdown(text) {
+            if (!text) return '';
+            let formatted = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/_(.*?)_/g, '<em>$1</em>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+            return `<p>${formatted}</p>`;
         }
 
         async function sendMessage(textOverride = null) {
@@ -847,6 +823,7 @@
                 }
                 currentChat.messages.push({ role: "user", content: messageText });
                 inputField.value = '';
+                inputField.style.height = '38px';
             }
 
             loadCurrentChat();
@@ -911,7 +888,11 @@
                     </div>
                 `;
             } else {
-                messageDiv.textContent = text;
+                if (sender === 'ai') {
+                    messageDiv.innerHTML = formatMarkdown(text);
+                } else {
+                    messageDiv.textContent = text;
+                }
             }
 
             wrapper.appendChild(messageDiv);
@@ -923,7 +904,11 @@
                 if (sender === 'user') {
                     actionsDiv.innerHTML = `<button class="action-btn" onclick="editMessage(${index})">✏️ Editar</button>`;
                 } else if (sender === 'ai' && index > 1) {
-                    actionsDiv.innerHTML = `<button class="action-btn" onclick="regenerateAI(${index})">🔄 Regenerar</button>`;
+                    actionsDiv.innerHTML = `
+                        <button class="action-btn" onclick="regenerateAI(${index}, 'normal')">🔄 Regenerar</button>
+                        <button class="action-btn" onclick="regenerateAI(${index}, 'longer')">📜 Más larga</button>
+                        <button class="action-btn" onclick="regenerateAI(${index}, 'shorter')">✂️ Más corta</button>
+                    `;
                 }
                 wrapper.appendChild(actionsDiv);
             }
@@ -948,11 +933,18 @@
             }
         }
 
-        function regenerateAI(index) {
+        function regenerateAI(index, mode = 'normal') {
             const currentChat = chats.find(c => c.id === currentChatId);
             if (!currentChat) return;
 
             currentChat.messages = currentChat.messages.slice(0, index);
+
+            if (mode === 'longer') {
+                currentChat.messages.push({ role: "user", content: "[Indicación de extensión: Por favor expande la escena anterior haciéndola mucho más larga, descriptiva, profunda y detallada.]" });
+            } else if (mode === 'shorter') {
+                currentChat.messages.push({ role: "user", content: "[Indicación de extensión: Por favor resume o haz la escena anterior más corta, concisa y directa.]" });
+            }
+
             saveChats();
             sendMessage("Regenerar");
         }
@@ -965,4 +957,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
