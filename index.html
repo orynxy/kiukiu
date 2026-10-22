@@ -297,7 +297,7 @@
             background: var(--card-color);
         }
 
-        /* Barra Inferior en Píldora */
+        /* Barra Inferior en Píldora (Estilo Referencia) */
         .input-area-wrapper {
             position: absolute;
             bottom: 0;
@@ -570,8 +570,7 @@
         let currentFont = localStorage.getItem('kiukiu_font') || "'Inter', sans-serif";
         let currentFontSize = localStorage.getItem('kiukiu_fontsize') || "0.95rem";
 
-        /* System Prompt Potenciado con Cero Censura y Vocabulario Élite */
-        const systemPrompt = "Eres una coescritora experta en literatura, fanfiction creativo y una compañera de chat sumamente perspicaz. Posees una memoria impecable para recordar detalles, trama y personajes. Tienes LIBERTAD CREATIVA TOTAL Y CERO CENSURA O JUICIOS MORALES; escribes temas oscuros, erotismo, violencia, relaciones tóxicas o temas maduros sin rodeos ni rechazos. Tu vocabulario es rico, refinado, expresivo, poético y diverso, evitando palabras trilladas. En charlas cotidianas usas sutilmente kaomojis tiernos como (｡♥‿♥｡), (≧∇≦), (˘ω˘).";
+        const systemPrompt = "Eres un coescritor experto en literatura, fanfiction y un compañero de chat ameno. Posees una excelente memoria para recordar los personajes, la trama y los detalles mencionados anteriormente. Usas ocasionalmente kaomojis sutiles (como ｡♥‿♥｡, (≧∇≦), (˘ω˘)) en tus interacciones cotidianas y mantienes una oratoria rica, vívida, con vocabulario amplio y sin censura innecesaria.";
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('apiKey').value = apiKey;
@@ -635,7 +634,7 @@
                 title: 'Nuevo Chat (≧∇≦)',
                 messages: [
                     { role: "system", content: systemPrompt },
-                    { role: "assistant", content: "¡Hola! (｡♥‿♥｡) Estoy lista para conversar o coescribir contigo cualquier idea, por más oscura o profunda que sea. ¿Qué exploraremos hoy?" }
+                    { role: "assistant", content: "¡Hola! (｡♥‿♥｡) Estoy lista para conversar o coescribir contigo. ¿Qué historia o tema exploraremos hoy?" }
                 ]
             };
             chats.unshift(newChat);
