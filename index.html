@@ -42,7 +42,6 @@
             position: relative;
         }
 
-        /* Panel Lateral (Sidebar) */
         .sidebar {
             width: 280px;
             background-color: var(--sidebar-color);
@@ -90,9 +89,7 @@
             transition: opacity 0.2s;
         }
 
-        .new-chat-btn:hover {
-            opacity: 0.9;
-        }
+        .new-chat-btn:hover { opacity: 0.9; }
 
         .history-title {
             font-size: 0.75rem;
@@ -148,9 +145,7 @@
             border-radius: 4px;
         }
 
-        .chat-item:hover .delete-chat {
-            opacity: 1;
-        }
+        .chat-item:hover .delete-chat { opacity: 1; }
 
         .settings-btn {
             background-color: var(--card-color);
@@ -169,11 +164,8 @@
             transition: background 0.2s;
         }
 
-        .settings-btn:hover {
-            background-color: var(--user-msg);
-        }
+        .settings-btn:hover { background-color: var(--user-msg); }
 
-        /* Área Principal de Chat */
         .main-chat {
             flex: 1;
             display: flex;
@@ -249,7 +241,6 @@
             border-bottom-left-radius: 4px;
         }
 
-        /* Barra de Entrada */
         .input-area-wrapper {
             padding: 12px 16px 16px;
             background-color: var(--bg-color);
@@ -298,23 +289,12 @@
             flex-shrink: 0;
         }
 
-        .send-btn:hover {
-            transform: scale(1.05);
-        }
+        .send-btn:hover { transform: scale(1.05); }
+        .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
-        .send-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Modal de Configuración */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(6px);
             display: none;
@@ -342,30 +322,11 @@
             align-items: center;
         }
 
-        .modal-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
+        .modal-title { font-size: 1.1rem; font-weight: 600; }
+        .close-modal { background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer; }
 
-        .close-modal {
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .config-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        label {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            font-weight: 500;
-        }
+        .config-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 0.85rem; color: var(--text-dim); font-weight: 500; }
 
         input, select {
             background-color: var(--bg-color);
@@ -377,9 +338,7 @@
             outline: none;
         }
 
-        input:focus, select:focus {
-            border-color: var(--accent);
-        }
+        input:focus, select:focus { border-color: var(--accent); }
 
         .save-btn {
             background-color: var(--accent);
@@ -392,30 +351,20 @@
             margin-top: 8px;
         }
 
-        /* Adaptación Móvil */
         @media (max-width: 768px) {
             .sidebar {
                 position: fixed;
-                top: 0;
-                bottom: 0;
-                left: 0;
+                top: 0; bottom: 0; left: 0;
                 transform: translateX(-100%);
             }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .message {
-                max-width: 90%;
-            }
+            .sidebar.open { transform: translateX(0); }
+            .menu-toggle { display: block; }
+            .message { max-width: 90%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Panel Lateral -->
     <div class="sidebar" id="sidebar">
         <div class="logo-area">
             <div class="logo">✦ Kiukiu Studio</div>
@@ -433,7 +382,6 @@
         </button>
     </div>
 
-    <!-- Área Principal de Chat -->
     <div class="main-chat">
         <div class="top-bar">
             <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
@@ -450,7 +398,6 @@
         </div>
     </div>
 
-    <!-- Ventana Modal de Configuración -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-header">
@@ -466,8 +413,8 @@
             <div class="config-group">
                 <label for="modelSelect">Modelo de IA:</label>
                 <select id="modelSelect">
-                    <option value="openrouter/auto">Auto Free (Elige el mejor gratis disponible)</option>
-                    <option value="google/gemma-2-9b-it:free">Gemma 2 9B (Gratis y Rápido)</option>
+                    <option value="openrouter/auto">Auto Free (Elige el libre disponible)</option>
+                    <option value="google/gemma-2-9b-it:free">Gemma 2 9B (Gratis)</option>
                     <option value="mistralai/mistral-7b-instruct:free">Mistral 7B (Gratis)</option>
                     <option value="meta-llama/llama-3.1-8b-instruct:free">Llama 3.1 8B (Gratis)</option>
                 </select>
@@ -606,7 +553,8 @@
         }
 
         async function sendMessage() {
-            if (!apiKey) {
+            const cleanApiKey = apiKey.trim();
+            if (!cleanApiKey) {
                 alert("Por favor guarda tu API Key en la configuración ⚙️");
                 toggleModal(true);
                 return;
@@ -637,10 +585,8 @@
                 const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json',
-                        'HTTP-Referer': window.location.href,
-                        'X-Title': 'Kiukiu Studio'
+                        'Authorization': `Bearer ${cleanApiKey}`,
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         model: selectedModel,
@@ -656,11 +602,11 @@
                     currentChat.messages.push({ role: "assistant", content: aiReply });
                     saveChats();
                 } else {
-                    const errorMsg = data.error ? data.error.message : "Error al recibir respuesta de OpenRouter.";
+                    const errorMsg = data.error ? data.error.message : "Respuesta no válida de OpenRouter.";
                     loadingMsgUI.textContent = "❌ " + errorMsg;
                 }
             } catch (error) {
-                loadingMsgUI.textContent = "❌ Error de conexión: " + error.message;
+                loadingMsgUI.textContent = "❌ Error de red: El navegador o la API de OpenRouter bloqueó la solicitud (" + error.message + ").";
             } finally {
                 sendBtn.disabled = false;
             }
@@ -684,4 +630,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
