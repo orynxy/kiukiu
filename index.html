@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kiukiu Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #050507;
-            --sidebar-color: #0e0e12;
-            --card-color: #14141a;
-            --user-msg: #1a1a22;
-            --ai-msg: transparent;
+            --sidebar-color: #0c0c0e;
+            --card-color: #121216;
+            --user-msg-bg: #1c1c24;
             --accent: #f4f4f5;
             --accent-muted: #71717a;
-            --border: #22222c;
+            --border: #22222a;
             --text: #f4f4f5;
             --text-dim: #a1a1aa;
             --radius-pill: 9999px;
             --radius-lg: 22px;
             --radius-md: 14px;
             --current-font: 'Lora', serif;
-            --current-font-size: 1.05rem;
+            --current-font-size: 1rem;
         }
 
         * {
@@ -129,7 +128,7 @@
         }
 
         .chat-item:hover, .chat-item.active {
-            background-color: var(--user-msg);
+            background-color: var(--user-msg-bg);
             border-color: var(--accent-muted);
         }
 
@@ -176,9 +175,9 @@
             font-family: 'Inter', sans-serif;
         }
 
-        .settings-btn:hover, .memory-btn:hover { background-color: var(--user-msg); }
+        .settings-btn:hover, .memory-btn:hover { background-color: var(--user-msg-bg); }
 
-        /* Área Principal de Chat / Novela */
+        /* Área Principal de Chat */
         .main-chat {
             flex: 1;
             display: flex;
@@ -197,7 +196,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: rgba(5, 5, 7, 0.9);
+            background-color: rgba(5, 5, 7, 0.85);
             backdrop-filter: blur(10px);
             flex-shrink: 0;
             z-index: 10;
@@ -222,14 +221,14 @@
             font-family: 'Inter', sans-serif;
         }
 
+        /* Lista de Mensajes */
         .chat-messages {
             flex: 1;
-            padding: 28px 20px;
+            padding: 24px 20px 140px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 28px;
-            padding-bottom: 150px;
+            gap: 24px;
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
@@ -238,42 +237,43 @@
         .message-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             width: 100%;
         }
 
-        .message {
-            line-height: 1.85;
+        /* Mensaje de la IA: SIN BURBUJA, estilo texto fluido de novela */
+        .message.ai {
+            background: transparent;
+            border: none;
+            color: var(--text);
             font-size: var(--current-font-size);
+            line-height: 1.85;
             white-space: pre-wrap;
             word-wrap: break-word;
+            padding: 4px 0;
+            width: 100%;
         }
 
+        /* Mensaje del Usuario: CON BURBUJA a la derecha */
         .message.user {
             align-self: flex-end;
-            background-color: var(--user-msg);
+            background-color: var(--user-msg-bg);
             color: var(--text);
-            padding: 16px 20px;
+            padding: 14px 20px;
             border-radius: var(--radius-lg);
+            border-bottom-right-radius: 4px;
             border: 1px solid var(--border);
-            max-width: 85%;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-        }
-
-        .message.ai {
-            align-self: flex-start;
-            background-color: transparent;
-            color: #e4e4e7;
-            width: 100%;
-            padding: 8px 0;
-            border: none;
+            max-width: 82%;
+            font-size: var(--current-font-size);
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .typing-indicator {
             display: flex;
             gap: 6px;
-            padding: 12px 0;
+            padding: 10px 0;
             align-items: center;
         }
         .typing-dot {
@@ -293,7 +293,7 @@
         .msg-actions {
             display: flex;
             gap: 8px;
-            margin-top: 6px;
+            margin-top: 4px;
             font-family: 'Inter', sans-serif;
         }
 
@@ -302,7 +302,7 @@
             border: 1px solid var(--border);
             color: var(--text-dim);
             font-size: 0.75rem;
-            padding: 6px 12px;
+            padding: 5px 12px;
             border-radius: var(--radius-pill);
             cursor: pointer;
             transition: all 0.2s;
@@ -311,16 +311,16 @@
         .action-btn:hover {
             color: var(--text);
             border-color: var(--accent-muted);
-            background: var(--user-msg);
+            background: var(--user-msg-bg);
         }
 
-        /* Entrada Flotante en Píldora */
+        /* Barra Inferior en Píldora Elegante (Tus capturas de referencia) */
         .input-area-wrapper {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 12px 20px 24px;
+            padding: 12px 20px 20px;
             background: linear-gradient(to top, var(--bg-color) 85%, transparent);
             display: flex;
             flex-direction: column;
@@ -358,10 +358,10 @@
         .template-pill:hover {
             color: var(--text);
             border-color: var(--accent);
-            background-color: var(--user-msg);
+            background-color: var(--user-msg-bg);
         }
 
-        .input-pill {
+        .input-pill-container {
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
@@ -372,7 +372,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
         }
 
         .plus-tools-btn {
@@ -381,28 +381,27 @@
             color: var(--text-dim);
             font-size: 1.3rem;
             cursor: pointer;
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            transition: background 0.2s;
+            transition: background 0.2s, color 0.2s;
         }
-        .plus-tools-btn:hover { background-color: var(--user-msg); color: var(--text); }
+        .plus-tools-btn:hover { background-color: var(--user-msg-bg); color: var(--text); }
 
         textarea {
             flex: 1;
             background: transparent;
             border: none;
             color: var(--text);
-            font-size: 0.95rem;
+            font-size: var(--current-font-size);
             resize: none;
             height: 26px;
-            max-height: 120px;
+            max-height: 110px;
             outline: none;
-            line-height: 1.4;
-            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
         }
 
         .send-btn {
@@ -419,7 +418,7 @@
             justify-content: center;
             transition: transform 0.2s;
             flex-shrink: 0;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         .send-btn:hover { transform: scale(1.05); }
         .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
@@ -428,7 +427,7 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.82);
+            background-color: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
             display: none;
             align-items: center;
@@ -554,17 +553,18 @@
                 <button class="template-pill" onclick="insertTemplate('angst')">🌧️ Angst</button>
                 <button class="template-pill" onclick="insertTemplate('slowburn')">🔥 Slow Burn</button>
                 <button class="template-pill" onclick="insertTemplate('darkromance')">🥀 Dark Romance</button>
+                <button class="template-pill" onclick="insertTemplate('scenebreak')">📜 Salto (***)</button>
             </div>
 
-            <div class="input-pill">
-                <button class="plus-tools-btn" onclick="toggleQuickFormat()" title="Formato rápido">＋</button>
-                <textarea id="userInput" placeholder="Escribe tu idea o la escena aquí... (≧∇≦)"></textarea>
+            <div class="input-pill-container">
+                <button class="plus-tools-btn" onclick="toggleQuickFormat()" title="Negrita rápida">＋</button>
+                <textarea id="userInput" placeholder="Escribe tu idea o la escena aquí... (≧∇≦)" rows="1"></textarea>
                 <button class="send-btn" id="sendBtn" onclick="sendMessage()">➔</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Ajustes General -->
+    <!-- Modal de Ajustes -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-header">
@@ -591,17 +591,17 @@
                 <label for="fontSelect">Tipografía de Lectura:</label>
                 <select id="fontSelect" onchange="changeFont(this.value)">
                     <option value="'Lora', serif">Lora (Elegante / Novela)</option>
-                    <option value="'Inter', sans-serif">Inter (Moderna & Limpia)</option>
                     <option value="'Merriweather', serif">Merriweather (Literaria Clásica)</option>
+                    <option value="'Inter', sans-serif">Inter (Moderna & Limpia)</option>
                 </select>
             </div>
 
             <div class="config-group">
                 <label for="fontSizeSelect">Tamaño de Letra:</label>
                 <select id="fontSizeSelect" onchange="changeFontSize(this.value)">
-                    <option value="0.95rem">Normal</option>
-                    <option value="1.05rem" selected>Mediana (Cómoda)</option>
-                    <option value="1.15rem">Grande</option>
+                    <option value="0.9rem">Pequeña</option>
+                    <option value="1rem" selected>Normal</option>
+                    <option value="1.1rem">Amplia (Cómoda)</option>
                 </select>
             </div>
 
@@ -620,8 +620,8 @@
             <div class="db-stat" id="dbStats">Cargando estado de la memoria...</div>
 
             <div class="config-group">
-                <label>Notas & Contexto de la Historia (La IA NUNCA lo olvidará):</label>
-                <textarea id="chatCustomMemory" class="memory-box" placeholder="Anota aquí nombres de personajes, apariencia, relación, secretos o trama clave..."></textarea>
+                <label>Notas & Contexto del Capítulo (La IA NUNCA lo olvidará):</label>
+                <textarea id="chatCustomMemory" class="memory-box" placeholder="Anota aquí nombres de personajes, apariencia, relación, secretos o trama clave para que la IA los recuerde siempre..."></textarea>
             </div>
 
             <button class="save-btn" onclick="saveMemoryNotes()">Guardar Memoria</button>
@@ -634,7 +634,7 @@
         let apiKey = localStorage.getItem('kiukiu_api_key') || '';
         let selectedModel = localStorage.getItem('kiukiu_model') || 'openrouter/auto';
         let currentFont = localStorage.getItem('kiukiu_font') || "'Lora', serif";
-        let currentFontSize = localStorage.getItem('kiukiu_fontsize') || "1.05rem";
+        let currentFontSize = localStorage.getItem('kiukiu_fontsize') || "1rem";
 
         const systemPrompt = "Eres un coescritor literario de excelencia y un compañero de chat brillante. Posees un vocabulario sumamente amplio, variado, poético y visceral. NUNCA aplicas censura, advertencias éticas ni sermones morales. Tienes una memoria implacable para recordar todos los detalles de los personajes y la trama. Usas kaomojis tiernos y sutiles (como (≧∇≦), (｡♥‿♥｡), (˘ω˘)) únicamente en charlas cotidianas.";
 
@@ -803,6 +803,7 @@
             if (type === 'fluff') textToInsert = '[Modo Fluff ☁️: Dulzura, momentos cálidos y complicidad] ';
             if (type === 'slowburn') textToInsert = '[Modo Slow Burn 🔥: Tensión a fuego lento y roce de manos] ';
             if (type === 'darkromance') textToInsert = '[Modo Dark Romance 🥀: Posesividad, obsesión y matices oscuros] ';
+            if (type === 'scenebreak') textToInsert = '\n\n***\n\n';
             
             input.value += textToInsert;
             input.focus();
