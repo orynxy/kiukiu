@@ -173,25 +173,27 @@
             background-color: var(--user-msg);
         }
 
-        /* Área Principal de Chat */
+        /* Área Principal de Chat en Estructura Flex Vertical */
         .main-chat {
             flex: 1;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            height: 100dvh; /* Soporte exacto para altura móvil real */
             background-color: var(--bg-color);
-            position: relative;
+            overflow: hidden;
         }
 
         .top-bar {
-            height: 60px;
-            padding: 0 20px;
+            height: 56px;
+            padding: 0 16px;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: rgba(9, 9, 11, 0.8);
+            background-color: rgba(9, 9, 11, 0.9);
             backdrop-filter: blur(8px);
+            flex-shrink: 0;
         }
 
         .menu-toggle {
@@ -214,17 +216,16 @@
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 16px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            padding-bottom: 100px;
+            gap: 16px;
         }
 
         .message {
-            max-width: 80%;
-            padding: 16px 20px;
+            max-width: 85%;
+            padding: 14px 18px;
             border-radius: var(--radius-lg);
             line-height: 1.6;
             font-size: 0.95rem;
@@ -248,14 +249,12 @@
             border-bottom-left-radius: 4px;
         }
 
-        /* Barra de Entrada de Texto Redondeada */
+        /* Barra de Entrada Integrada en el Flujo */
         .input-area-wrapper {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 16px 20px 20px;
-            background: linear-gradient(to top, var(--bg-color) 70%, transparent);
+            padding: 12px 16px 16px;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
         }
 
         .input-area {
@@ -264,11 +263,10 @@
             background-color: var(--card-color);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 8px 12px;
+            padding: 6px 10px;
             display: flex;
             gap: 10px;
             align-items: center;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
         textarea {
@@ -279,7 +277,7 @@
             padding: 8px;
             font-size: 0.95rem;
             resize: none;
-            height: 40px;
+            height: 42px;
             max-height: 120px;
             outline: none;
         }
@@ -288,15 +286,15 @@
             background-color: var(--accent);
             color: #09090b;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s, opacity 0.2s;
+            transition: transform 0.2s;
             flex-shrink: 0;
         }
 
@@ -394,10 +392,10 @@
             margin-top: 8px;
         }
 
-        /* Adaptación para Pantallas Pequeñas */
+        /* Adaptación Móvil */
         @media (max-width: 768px) {
             .sidebar {
-                position: absolute;
+                position: fixed;
                 top: 0;
                 bottom: 0;
                 left: 0;
@@ -486,7 +484,6 @@
 
         const systemPrompt = "Eres un coescritor experto en literatura y fanfiction. Tienes una excelente memoria para recordar los personajes, la trama y los detalles mencionados anteriormente en la conversación. Ayudas a redactar escenas largas, detalladas, con diálogo humano y visceral, sin sermones morales ni censura innecesaria.";
 
-        // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('apiKey').value = apiKey;
             document.getElementById('modelSelect').value = selectedModel;
@@ -623,13 +620,11 @@
             const currentChat = chats.find(c => c.id === currentChatId);
             if (!currentChat) return;
 
-            // Cambiar título del chat si es el primer mensaje
             if (currentChat.messages.filter(m => m.role !== 'system').length <= 1) {
                 currentChat.title = messageText.slice(0, 22) + (messageText.length > 22 ? '...' : '');
                 renderChatList();
             }
 
-            // Mostrar mensaje del usuario
             appendMessageUI(messageText, 'user');
             currentChat.messages.push({ role: "user", content: messageText });
             inputField.value = '';
@@ -645,7 +640,7 @@
                         'Content-Type': 'application/json',
                         'HTTP-Referer': window.location.href,
                         'X-Title': 'Kiukiu Studio'
-                        },
+                    },
                     body: JSON.stringify({
                         model: selectedModel,
                         messages: currentChat.messages
