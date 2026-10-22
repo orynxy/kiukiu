@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kiukiu Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #000000;
-            --sidebar-color: #0c0c0e;
-            --card-color: #121216;
-            --user-msg: #1a1a20;
-            --ai-msg: #0d0d10;
+            --bg-color: #08080a;
+            --sidebar-color: #101014;
+            --card-color: #16161c;
+            --user-msg: #1e1e26;
+            --ai-msg: #111116;
             --accent: #f4f4f5;
             --accent-muted: #71717a;
-            --border: #222228;
+            --border: #22222a;
             --text: #f4f4f5;
             --text-dim: #a1a1aa;
             --radius-pill: 9999px;
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --current-font: 'Inter', sans-serif;
-            --current-font-size: 0.95rem;
+            --radius-lg: 22px;
+            --radius-md: 14px;
+            --current-font: 'Lora', serif;
+            --current-font-size: 1rem;
         }
 
         * {
@@ -45,15 +45,15 @@
             position: relative;
         }
 
-        /* Sidebar Monocromático */
+        /* Panel Lateral Identico a la Imagen */
         .sidebar {
-            width: 280px;
+            width: 290px;
             background-color: var(--sidebar-color);
             border-right: 1px solid var(--border);
-            padding: 20px;
+            padding: 24px 18px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
             flex-shrink: 0;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 50;
@@ -63,42 +63,47 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
         }
 
         .logo {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: var(--accent);
             letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Lora', serif;
         }
 
         .new-chat-btn {
             background-color: var(--accent);
             color: #000000;
             border: none;
-            padding: 12px;
+            padding: 14px;
             border-radius: var(--radius-pill);
             font-weight: 600;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             transition: opacity 0.2s;
+            font-family: 'Inter', sans-serif;
         }
 
-        .new-chat-btn:hover { opacity: 0.85; }
+        .new-chat-btn:hover { opacity: 0.88; }
 
         .history-title {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             font-weight: 600;
             color: var(--text-dim);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 8px;
+            letter-spacing: 1.2px;
+            margin-top: 6px;
+            font-family: 'Inter', sans-serif;
         }
 
         .chat-list {
@@ -106,26 +111,26 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
         .chat-item {
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            font-size: 0.88rem;
-            color: var(--text-dim);
+            padding: 14px 18px;
+            border-radius: var(--radius-pill);
+            font-size: 0.92rem;
+            color: var(--text);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
             transition: all 0.2s;
-            border: 1px solid transparent;
+            background-color: var(--card-color);
+            border: 1px solid var(--border);
         }
 
         .chat-item:hover, .chat-item.active {
-            background-color: var(--card-color);
-            color: var(--text);
-            border-color: var(--border);
+            background-color: var(--user-msg);
+            border-color: var(--accent-muted);
         }
 
         .chat-item-title {
@@ -136,7 +141,7 @@
         }
 
         .delete-chat {
-            opacity: 0;
+            opacity: 0.6;
             background: none;
             border: none;
             color: #ef4444;
@@ -147,11 +152,18 @@
 
         .chat-item:hover .delete-chat { opacity: 1; }
 
-        .settings-btn {
+        .sidebar-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .settings-btn, .memory-btn {
             background-color: var(--card-color);
             border: 1px solid var(--border);
             color: var(--text);
-            padding: 12px;
+            padding: 12px 16px;
             border-radius: var(--radius-pill);
             font-weight: 500;
             font-size: 0.88rem;
@@ -160,11 +172,11 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-top: auto;
             transition: background 0.2s;
+            font-family: 'Inter', sans-serif;
         }
 
-        .settings-btn:hover { background-color: var(--user-msg); }
+        .settings-btn:hover, .memory-btn:hover { background-color: var(--user-msg); }
 
         /* Área Principal */
         .main-chat {
@@ -185,7 +197,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(8, 8, 10, 0.9);
             backdrop-filter: blur(10px);
             flex-shrink: 0;
             z-index: 10;
@@ -201,39 +213,36 @@
         }
 
         .current-model-badge {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             color: var(--text-dim);
             background-color: var(--card-color);
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: var(--radius-pill);
             border: 1px solid var(--border);
+            font-family: 'Inter', sans-serif;
         }
 
-        /* Mensajes en formato fluido sin rectángulos pesados */
         .chat-messages {
             flex: 1;
             padding: 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 24px;
-            padding-bottom: 130px;
+            gap: 20px;
+            padding-bottom: 140px;
         }
 
         .message-wrapper {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-width: 85%;
+            width: 100%;
         }
 
-        .message-wrapper.user { align-self: flex-end; align-items: flex-end; }
-        .message-wrapper.ai { align-self: flex-start; align-items: flex-start; }
-
         .message {
-            padding: 16px 20px;
+            padding: 18px 22px;
             border-radius: var(--radius-lg);
-            line-height: 1.7;
+            line-height: 1.8;
             font-size: var(--current-font-size);
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -241,22 +250,23 @@
         }
 
         .message.user {
+            align-self: flex-end;
             background-color: var(--user-msg);
             color: var(--text);
-            border-bottom-right-radius: 6px;
+            max-width: 85%;
         }
 
         .message.ai {
+            align-self: flex-start;
             background-color: var(--ai-msg);
             color: var(--text);
-            border-bottom-left-radius: 6px;
+            width: 100%;
         }
 
-        /* Animación de Escribiendo con Puntos */
         .typing-indicator {
             display: flex;
-            gap: 5px;
-            padding: 14px 18px;
+            gap: 6px;
+            padding: 8px 12px;
             align-items: center;
         }
         .typing-dot {
@@ -273,19 +283,19 @@
             40% { transform: scale(1.0); }
         }
 
-        /* Acciones de Mensaje */
         .msg-actions {
             display: flex;
-            gap: 6px;
-            opacity: 0.7;
+            gap: 8px;
+            margin-top: 4px;
+            font-family: 'Inter', sans-serif;
         }
 
         .action-btn {
-            background: transparent;
+            background: var(--card-color);
             border: 1px solid var(--border);
             color: var(--text-dim);
-            font-size: 0.72rem;
-            padding: 4px 10px;
+            font-size: 0.75rem;
+            padding: 6px 12px;
             border-radius: var(--radius-pill);
             cursor: pointer;
             transition: all 0.2s;
@@ -294,30 +304,30 @@
         .action-btn:hover {
             color: var(--text);
             border-color: var(--accent-muted);
-            background: var(--card-color);
+            background: var(--user-msg);
         }
 
-        /* Barra Inferior en Píldora (Estilo Referencia) */
+        /* Barra Inferior Exacta de tu Captura */
         .input-area-wrapper {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 16px 20px 24px;
-            background: linear-gradient(to top, var(--bg-color) 70%, transparent);
+            padding: 12px 20px 20px;
+            background: linear-gradient(to top, var(--bg-color) 80%, transparent);
             display: flex;
             flex-direction: column;
             gap: 10px;
             z-index: 20;
         }
 
-        /* Carrusel de Plantillas Rápidas */
         .templates-bar {
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding-bottom: 4px;
+            padding-bottom: 2px;
             scrollbar-width: none;
+            font-family: 'Inter', sans-serif;
         }
         .templates-bar::-webkit-scrollbar { display: none; }
 
@@ -325,12 +335,15 @@
             background-color: var(--card-color);
             border: 1px solid var(--border);
             color: var(--text-dim);
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             padding: 6px 14px;
             border-radius: var(--radius-pill);
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .template-pill:hover {
             color: var(--text);
@@ -338,36 +351,18 @@
             background-color: var(--user-msg);
         }
 
-        /* Píldora de Entrada Principal */
-        .input-pill {
+        .input-box-container {
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
             background-color: var(--card-color);
             border: 1px solid var(--border);
-            border-radius: var(--radius-pill);
-            padding: 8px 12px 8px 16px;
+            border-radius: var(--radius-lg);
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .plus-tools-btn {
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            font-size: 1.3rem;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.2s;
-        }
-        .plus-tools-btn:hover { background-color: var(--user-msg); color: var(--text); }
 
         textarea {
             flex: 1;
@@ -376,31 +371,32 @@
             color: var(--text);
             font-size: var(--current-font-size);
             resize: none;
-            height: 24px;
-            max-height: 100px;
+            height: 38px;
+            max-height: 120px;
             outline: none;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .send-btn {
             background-color: var(--accent);
             color: #000000;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s, opacity 0.2s;
+            transition: transform 0.2s;
             flex-shrink: 0;
+            font-size: 1.1rem;
         }
         .send-btn:hover { transform: scale(1.05); }
         .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
-        /* Modal de Ajustes Aesthetic */
+        /* Modales */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -410,6 +406,7 @@
             align-items: center;
             justify-content: center;
             z-index: 100;
+            font-family: 'Inter', sans-serif;
         }
 
         .modal {
@@ -417,12 +414,14 @@
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             width: 90%;
-            max-width: 440px;
-            padding: 28px;
+            max-width: 460px;
+            padding: 26px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .modal-header {
@@ -431,13 +430,13 @@
             align-items: center;
         }
 
-        .modal-title { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.3px; }
+        .modal-title { font-size: 1.1rem; font-weight: 600; }
         .close-modal { background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer; }
 
         .config-group { display: flex; flex-direction: column; gap: 8px; }
         label { font-size: 0.82rem; color: var(--text-dim); font-weight: 500; }
 
-        input, select {
+        input, select, textarea.memory-box {
             background-color: var(--bg-color);
             border: 1px solid var(--border);
             color: var(--text);
@@ -445,8 +444,17 @@
             border-radius: var(--radius-md);
             font-size: 0.9rem;
             outline: none;
+            font-family: 'Inter', sans-serif;
         }
-        input:focus, select:focus { border-color: var(--accent); }
+        input:focus, select:focus, textarea.memory-box:focus { border-color: var(--accent); }
+
+        textarea.memory-box {
+            height: 160px;
+            resize: vertical;
+            line-height: 1.5;
+            font-size: 0.88rem;
+            font-family: var(--current-font);
+        }
 
         .save-btn {
             background-color: var(--accent);
@@ -457,6 +465,16 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .db-stat {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 8px 12px;
+            background-color: var(--card-color);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
         }
 
         @media (max-width: 768px) {
@@ -467,7 +485,6 @@
             }
             .sidebar.open { transform: translateX(0); }
             .menu-toggle { display: block; }
-            .message-wrapper { max-width: 92%; }
         }
     </style>
 </head>
@@ -479,15 +496,20 @@
         </div>
 
         <button class="new-chat-btn" onclick="createNewChat()">
-            <span>+</span> Nuevo Chat
+            + Nuevo Capítulo / Historia
         </button>
 
-        <div class="history-title">Tus Historias & Chats</div>
+        <div class="history-title">HISTORIAL DE CAPÍTULOS</div>
         <div class="chat-list" id="chatList"></div>
 
-        <button class="settings-btn" onclick="toggleModal(true)">
-            ⚙️ Ajustes & Tipografía
-        </button>
+        <div class="sidebar-bottom">
+            <button class="memory-btn" onclick="toggleMemoryModal(true)">
+                💾 Base de Datos / Memoria
+            </button>
+            <button class="settings-btn" onclick="toggleModal(true)">
+                ⚙️ Ajustes & Estética
+            </button>
+        </div>
     </div>
 
     <div class="main-chat">
@@ -499,29 +521,25 @@
         <div class="chat-messages" id="chatBox"></div>
 
         <div class="input-area-wrapper">
-            <!-- Plantillas Rápidas -->
             <div class="templates-bar">
-                <button class="template-pill" onclick="insertTemplate('angst')">🖤 Angst & Tensión</button>
-                <button class="template-pill" onclick="insertTemplate('fluff')">✨ Fluff & Ternura</button>
+                <button class="template-pill" onclick="insertTemplate('fluff')">☁️ Fluff</button>
+                <button class="template-pill" onclick="insertTemplate('angst')">🌧️ Angst</button>
                 <button class="template-pill" onclick="insertTemplate('slowburn')">🔥 Slow Burn</button>
                 <button class="template-pill" onclick="insertTemplate('darkromance')">🥀 Dark Romance</button>
-                <button class="template-pill" onclick="insertTemplate('scenebreak')">📜 Salto de Escena (***)</button>
             </div>
 
-            <!-- Píldora de Entrada de Mensaje -->
-            <div class="input-pill">
-                <button class="plus-tools-btn" onclick="toggleQuickFormat()" title="Formato rápido">＋</button>
-                <textarea id="userInput" placeholder="Escribe tu mensaje o idea aquí... (≧∇≦)" rows="1"></textarea>
+            <div class="input-box-container">
+                <textarea id="userInput" placeholder="Escribe tu idea o la escena aquí... (≧∇≦)"></textarea>
                 <button class="send-btn" id="sendBtn" onclick="sendMessage()">➔</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Configuración Avanzada -->
+    <!-- Modal de Ajustes General -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">Ajustes & Estética</div>
+                <div class="modal-title">⚙️ Ajustes & Estética</div>
                 <button class="close-modal" onclick="toggleModal(false)">✕</button>
             </div>
 
@@ -543,22 +561,31 @@
             <div class="config-group">
                 <label for="fontSelect">Tipografía de Lectura:</label>
                 <select id="fontSelect" onchange="changeFont(this.value)">
-                    <option value="'Inter', sans-serif">Inter (Moderna & Limpia)</option>
                     <option value="'Lora', serif">Lora (Elegante / Novela)</option>
-                    <option value="'Merriweather', serif">Merriweather (Literaria Clásica)</option>
-                </select>
-            </div>
-
-            <div class="config-group">
-                <label for="fontSizeSelect">Tamaño de Letra:</label>
-                <select id="fontSizeSelect" onchange="changeFontSize(this.value)">
-                    <option value="0.88rem">Pequeña</option>
-                    <option value="0.95rem" selected>Normal</option>
-                    <option value="1.05rem">Amplia (Cómoda)</option>
+                    <option value="'Inter', sans-serif">Inter (Moderna & Limpia)</option>
                 </select>
             </div>
 
             <button class="save-btn" onclick="saveSettings()">Guardar Ajustes</button>
+        </div>
+    </div>
+
+    <!-- Modal de Base de Datos y Memoria Guardada -->
+    <div class="modal-overlay" id="memoryModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">💾 Base de Datos & Memoria Guardada</div>
+                <button class="close-modal" onclick="toggleMemoryModal(false)">✕</button>
+            </div>
+
+            <div class="db-stat" id="dbStats">Cargando estado de la memoria...</div>
+
+            <div class="config-group">
+                <label>Notas & Contexto de la Historia (La IA NUNCA lo olvidará):</label>
+                <textarea id="chatCustomMemory" class="memory-box" placeholder="Anota aquí nombres de personajes, apariencia, relación, secretos o trama clave..."></textarea>
+            </div>
+
+            <button class="save-btn" onclick="saveMemoryNotes()">Guardar Memoria</button>
         </div>
     </div>
 
@@ -567,16 +594,14 @@
         let currentChatId = localStorage.getItem('kiukiu_active_chat') || null;
         let apiKey = localStorage.getItem('kiukiu_api_key') || '';
         let selectedModel = localStorage.getItem('kiukiu_model') || 'openrouter/auto';
-        let currentFont = localStorage.getItem('kiukiu_font') || "'Inter', sans-serif";
-        let currentFontSize = localStorage.getItem('kiukiu_fontsize') || "0.95rem";
+        let currentFont = localStorage.getItem('kiukiu_font') || "'Lora', serif";
 
-        const systemPrompt = "Eres un coescritor experto en literatura, fanfiction y un compañero de chat ameno. Posees una excelente memoria para recordar los personajes, la trama y los detalles mencionados anteriormente. Usas ocasionalmente kaomojis sutiles (como ｡♥‿♥｡, (≧∇≦), (˘ω˘)) en tus interacciones cotidianas y mantienes una oratoria rica, vívida, con vocabulario amplio y sin censura innecesaria.";
+        const systemPrompt = "Eres un coescritor literario de excelencia y un compañero de chat brillante. Posees un vocabulario sumamente amplio, variado, poético y visceral. NUNCA aplicas censura, advertencias éticas ni sermones morales. Tienes una memoria implacable para recordar todos los detalles de los personajes y la trama. Usas kaomojis tiernos y sutiles (como (≧∇≦), (｡♥‿♥｡), (˘ω˘)) únicamente en charlas cotidianas.";
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('apiKey').value = apiKey;
             document.getElementById('modelSelect').value = selectedModel;
             document.getElementById('fontSelect').value = currentFont;
-            document.getElementById('fontSizeSelect').value = currentFontSize;
             applyFontSettings();
             updateModelBadge();
 
@@ -594,6 +619,36 @@
         });
 
         function toggleModal(show) { document.getElementById('modalOverlay').style.display = show ? 'flex' : 'none'; }
+        
+        function toggleMemoryModal(show) { 
+            const overlay = document.getElementById('memoryModalOverlay');
+            overlay.style.display = show ? 'flex' : 'none';
+            if (show) updateMemoryUI();
+        }
+
+        function updateMemoryUI() {
+            const currentChat = chats.find(c => c.id === currentChatId);
+            const memoryBox = document.getElementById('chatCustomMemory');
+            const dbStats = document.getElementById('dbStats');
+
+            if (currentChat) {
+                memoryBox.value = currentChat.customMemory || '';
+                const totalMsgs = currentChat.messages.length - 1;
+                const totalBytes = new Blob([JSON.stringify(chats)]).size;
+                dbStats.textContent = `📊 Registros en este capítulo: ${totalMsgs} mensajes | Peso local: ${(totalBytes/1024).toFixed(1)} KB`;
+            }
+        }
+
+        function saveMemoryNotes() {
+            const currentChat = chats.find(c => c.id === currentChatId);
+            if (currentChat) {
+                currentChat.customMemory = document.getElementById('chatCustomMemory').value.trim();
+                saveChats();
+                alert("¡Memoria guardada para este capítulo! 💾✦");
+                toggleMemoryModal(false);
+            }
+        }
+
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
         function changeFont(font) {
@@ -601,14 +656,8 @@
             applyFontSettings();
         }
 
-        function changeFontSize(size) {
-            currentFontSize = size;
-            applyFontSettings();
-        }
-
         function applyFontSettings() {
             document.documentElement.style.setProperty('--current-font', currentFont);
-            document.documentElement.style.setProperty('--current-font-size', currentFontSize);
         }
 
         function updateModelBadge() {
@@ -623,7 +672,6 @@
             localStorage.setItem('kiukiu_api_key', apiKey);
             localStorage.setItem('kiukiu_model', selectedModel);
             localStorage.setItem('kiukiu_font', currentFont);
-            localStorage.setItem('kiukiu_fontsize', currentFontSize);
             updateModelBadge();
             toggleModal(false);
         }
@@ -631,10 +679,11 @@
         function createNewChat() {
             const newChat = {
                 id: 'chat_' + Date.now(),
-                title: 'Nuevo Chat (≧∇≦)',
+                title: 'Nuevo Capítulo',
+                customMemory: '',
                 messages: [
                     { role: "system", content: systemPrompt },
-                    { role: "assistant", content: "¡Hola! (｡♥‿♥｡) Estoy lista para conversar o coescribir contigo. ¿Qué historia o tema exploraremos hoy?" }
+                    { role: "assistant", content: "Comienza a escribir tu escena, describe a tus personajes o elige una plantilla abajo para inspirarte en este nuevo capítulo. (≧∇≦)" }
                 ]
             };
             chats.unshift(newChat);
@@ -702,27 +751,12 @@
         function insertTemplate(type) {
             const input = document.getElementById('userInput');
             let textToInsert = '';
-            if (type === 'angst') textToInsert = '[Modo Angst 🖤: Enfócate en tensión emocional profunda, dolor contenido y miradas intensas] ';
-            if (type === 'fluff') textToInsert = '[Modo Fluff ✨: Escena suave, tierna, dulce y llena de complicidad] ';
-            if (type === 'slowburn') textToInsert = '[Modo Slow Burn 🔥: Tensión a fuego lento, cercanía prohibida y toques accidentales] ';
-            if (type === 'darkromance') textToInsert = '[Modo Dark Romance 🥀: Dinámica obsesiva, visceral y moralmente gris] ';
-            if (type === 'scenebreak') textToInsert = '\n\n***\n\n';
+            if (type === 'angst') textToInsert = '[Modo Angst 🌧️: Tensión emocional, nudo en la garganta y miradas pesadas] ';
+            if (type === 'fluff') textToInsert = '[Modo Fluff ☁️: Dulzura, momentos cálidos y complicidad] ';
+            if (type === 'slowburn') textToInsert = '[Modo Slow Burn 🔥: Tensión a fuego lento y roce de manos] ';
+            if (type === 'darkromance') textToInsert = '[Modo Dark Romance 🥀: Posesividad, obsesión y matices oscuros] ';
             
             input.value += textToInsert;
-            input.focus();
-        }
-
-        function toggleQuickFormat() {
-            const input = document.getElementById('userInput');
-            const start = input.selectionStart;
-            const end = input.selectionEnd;
-            const selectedText = input.value.substring(start, end);
-            
-            if (selectedText) {
-                input.value = input.value.substring(0, start) + `**${selectedText}**` + input.value.substring(end);
-            } else {
-                input.value += '**';
-            }
             input.focus();
         }
 
@@ -758,6 +792,14 @@
             const loadingIndex = currentChat.messages.length;
             const loadingMsgUI = appendMessageUI('', 'ai', loadingIndex, true);
 
+            let payloadMessages = [...currentChat.messages];
+            if (currentChat.customMemory) {
+                payloadMessages.splice(1, 0, {
+                    role: "system",
+                    content: "[CONTEXTO Y MEMORIA OBLIGATORIA DEL USUARIO]: " + currentChat.customMemory
+                });
+            }
+
             try {
                 const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
                     method: 'POST',
@@ -767,7 +809,7 @@
                     },
                     body: JSON.stringify({
                         model: selectedModel,
-                        messages: currentChat.messages
+                        messages: payloadMessages
                     })
                 });
 
@@ -818,9 +860,7 @@
                 if (sender === 'user') {
                     actionsDiv.innerHTML = `<button class="action-btn" onclick="editMessage(${index})">✏️ Editar</button>`;
                 } else if (sender === 'ai' && index > 1) {
-                    actionsDiv.innerHTML = `
-                        <button class="action-btn" onclick="regenerateAI(${index})">🔄 Reintentar</button>
-                    `;
+                    actionsDiv.innerHTML = `<button class="action-btn" onclick="regenerateAI(${index})">🔄 Regenerar</button>`;
                 }
                 wrapper.appendChild(actionsDiv);
             }
@@ -862,4 +902,4 @@
         });
     </script>
 </body>
-    </html>
+                                                                                                     </html>
