@@ -6,17 +6,17 @@
     <title>Kiukiu AI Chat</title>
     <style>
         :root {
-            --bg-color: #0d0d0d;
-            --sidebar-color: #171717;
-            --chat-bg: #121212;
-            --user-msg: #262626;
-            --ai-msg: #1a1a1a;
-            --accent: #d4d4d8;
-            --accent-hover: #ffffff;
-            --btn-text: #0d0d0d;
-            --text: #e5e5e5;
-            --text-muted: #a3a3a3;
-            --border: #262626;
+            --bg-color: #070b19;
+            --sidebar-color: #0d1527;
+            --chat-bg: #090e20;
+            --user-msg: #172a4d;
+            --ai-msg: #111a33;
+            --accent: #38bdf8;
+            --accent-hover: #0284c7;
+            --btn-text: #070b19;
+            --text: #e0f2fe;
+            --text-muted: #7dd3fc;
+            --border: #1e293b;
         }
 
         * {
@@ -34,14 +34,16 @@
             overflow: hidden;
         }
 
+        /* Panel Lateral */
         .sidebar {
-            width: 300px;
+            width: 320px;
             background-color: var(--sidebar-color);
             border-right: 1px solid var(--border);
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            z-index: 10;
         }
 
         .logo {
@@ -51,7 +53,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            letter-spacing: 0.5px;
         }
 
         .config-group {
@@ -80,12 +81,31 @@
             border-color: var(--accent);
         }
 
+        .clear-btn {
+            background-color: transparent;
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: auto;
+        }
+
+        .clear-btn:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        /* Area Principal de Chat */
         .main-chat {
             flex: 1;
             display: flex;
             flex-direction: column;
             background-color: var(--chat-bg);
             height: 100vh;
+            position: relative;
         }
 
         .chat-messages {
@@ -95,10 +115,11 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+            padding-bottom: 90px; /* Espacio para que no lo tape la barra de texto */
         }
 
         .message {
-            max-width: 80%;
+            max-width: 85%;
             padding: 14px 18px;
             border-radius: 12px;
             line-height: 1.6;
@@ -110,8 +131,8 @@
         .message.user {
             align-self: flex-end;
             background-color: var(--user-msg);
-            color: #ffffff;
-            border: 1px solid #333333;
+            color: #f0f9ff;
+            border: 1px solid #1d4ed8;
             border-bottom-right-radius: 2px;
         }
 
@@ -122,7 +143,12 @@
             border-bottom-left-radius: 2px;
         }
 
+        /* Area de Entrada FIJA abajo */
         .input-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             padding: 16px 20px;
             border-top: 1px solid var(--border);
             background-color: var(--sidebar-color);
@@ -148,7 +174,7 @@
             border-color: var(--accent);
         }
 
-        button {
+        .send-btn {
             background-color: var(--accent);
             color: var(--btn-text);
             border: none;
@@ -160,18 +186,19 @@
             transition: background 0.2s;
         }
 
-        button:hover {
+        .send-btn:hover {
             background-color: var(--accent-hover);
         }
 
-        button:disabled {
+        .send-btn:disabled {
             opacity: 0.3;
             cursor: not-allowed;
         }
 
         @media (max-width: 768px) {
-            body { flex-direction: column; }
+            body { flex-direction: column; overflow: auto; }
             .sidebar { width: 100%; height: auto; padding: 12px; }
+            .main-chat { height: calc(100vh - 220px); }
             .message { max-width: 90%; }
         }
     </style>
@@ -179,7 +206,7 @@
 <body>
 
     <div class="sidebar">
-        <div class="logo">✦ Kiukiu Chat AI</div>
+        <div class="logo">💙 Kiukiu Chat AI</div>
         
         <div class="config-group">
             <label for="apiKey">OpenRouter API Key:</label>
@@ -190,28 +217,31 @@
             <label for="modelSelect">Modelo de IA:</label>
             <select id="modelSelect">
                 <option value="google/gemma-4-31b-it:free">Gemma 4 31B (Gratis)</option>
-                <option value="thinkingmachines/inkling:free">Inkling (Gratis)</option>
+                <option value="thinkingmachines/inkling:free">Inkling (Gratis - Gran Memoria)</option>
                 <option value="openrouter/free">Auto Free (Comodín)</option>
             </select>
         </div>
+
+        <button class="clear-btn" onclick="clearMemory()">🧹 Borrar Memoria / Nuevo Chat</button>
     </div>
 
     <div class="main-chat">
         <div class="chat-messages" id="chatBox">
-            <div class="message ai">¡Hola! Soy tu asistente de escritura. Pon tu API Key a la izquierda y cuéntame sobre tu historia, personajes o qué escena quieres empezar a escribir. 📖✦</div>
+            <div class="message ai">¡Hola! Soy tu asistente de escritura. Pon tu API Key a la izquierda y cuéntame sobre tu historia, personajes o qué escena quieres empezar a escribir. 📖💙</div>
         </div>
 
         <div class="input-area">
             <textarea id="userInput" placeholder="Escribe tu mensaje o idea para la escena..."></textarea>
-            <button id="sendBtn" onclick="sendMessage()">Enviar</button>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">Enviar</button>
         </div>
     </div>
 
     <script>
-        const chatHistory = [
+        // Historial persistente con memoria profunda
+        let chatHistory = [
             {
                 role: "system",
-                content: "Eres un coescritor experto en literatura y fanfiction. Ayudas a redactar escenas largas, detalladas, con diálogo humano y visceral, sin sermones morales ni censura innecesaria."
+                content: "Eres un coescritor experto en literatura y fanfiction. Tienes una excelente memoria para recordar los personajes, la trama y los detalles mencionados anteriormente en la conversación. Ayudas a redactar escenas largas, detalladas, con diálogo humano y visceral, sin sermones morales ni censura innecesaria."
             }
         ];
 
@@ -229,6 +259,7 @@
 
             if (!messageText) return;
 
+            // Mostrar mensaje del usuario y guardarlo en el historial de memoria
             appendMessage(messageText, 'user');
             chatHistory.push({ role: "user", content: messageText });
             inputField.value = '';
@@ -256,6 +287,7 @@
                 if (data.choices && data.choices[0]) {
                     const aiReply = data.choices[0].message.content;
                     loadingMessage.textContent = aiReply;
+                    // Guardar la respuesta de la IA en la memoria para el siguiente turno
                     chatHistory.push({ role: "assistant", content: aiReply });
                 } else {
                     loadingMessage.textContent = "Error: " + (data.error ? data.error.message : "No se pudo obtener respuesta.");
@@ -275,6 +307,19 @@
             chatBox.appendChild(messageDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
             return messageDiv;
+        }
+
+        function clearMemory() {
+            if (confirm("¿Quieres borrar la memoria y empezar un chat nuevo?")) {
+                chatHistory = [
+                    {
+                        role: "system",
+                        content: "Eres un coescritor experto en literatura y fanfiction. Tienes una excelente memoria para recordar los personajes, la trama y los detalles mencionados anteriormente en la conversación. Ayudas a redactar escenas largas, detalladas, con diálogo humano y visceral, sin sermones morales ni censura innecesaria."
+                    }
+                ];
+                const chatBox = document.getElementById('chatBox');
+                chatBox.innerHTML = '<div class="message ai">Memoria reiniciada. ¡Cuéntame de qué tratará la nueva escena o capítulo! 📖💙</div>';
+            }
         }
 
         document.getElementById('userInput').addEventListener('keydown', function(e) {
